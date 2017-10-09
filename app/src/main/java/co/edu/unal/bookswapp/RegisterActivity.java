@@ -93,6 +93,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         if(task.isSuccessful()) {
                             // TODO: start profile activity
                             Toast.makeText(RegisterActivity.this, "Usuario creado exitosamente", Toast.LENGTH_SHORT).show();
+                            finish();
+                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                         } else {
                             Toast.makeText(RegisterActivity.this, "No se pudo registrar, intentelo de nuevo", Toast.LENGTH_SHORT).show();
                         }
