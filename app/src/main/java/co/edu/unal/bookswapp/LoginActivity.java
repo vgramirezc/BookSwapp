@@ -2,6 +2,7 @@ package co.edu.unal.bookswapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -55,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         if(view == registerText) {
             finish();
+            //startActivity(new Intent(this, FirstActivity.class));
             startActivity(new Intent(this, RegisterActivity.class));
         }
     }
@@ -81,8 +83,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
                         if(task.isSuccessful()) {
-                            // TODO: start profile activity
                             Toast.makeText(LoginActivity.this, "Bienvenido", Toast.LENGTH_SHORT).show();
+                            // TODO: start profile activity
+                            finish();
+                            startActivity(new Intent(LoginActivity.this, FirstActivity.class));
                         } else {
                             Toast.makeText(LoginActivity.this, "Correo o contraseña incorrecto, intente nuevamente", Toast.LENGTH_SHORT).show();
                         }
