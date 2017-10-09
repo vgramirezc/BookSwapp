@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "476782010195",
+    "firebase_url": "https://bookswapp-7f72f.firebaseio.com",
+    "project_id": "bookswapp-7f72f",
+    "storage_bucket": "bookswapp-7f72f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:476782010195:android:a5e1c3f6bd4f0f52",
+        "android_client_info": {
+          "package_name": "co.edu.unal.bookswapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "476782010195-v951dpdn63ttm1ftsci724ll39nsrb6j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.edu.unal.bookswapp",
+            "certificate_hash": "fdb2631b4f7947a46d74dff8a833f060fe4572ab"
+          }
+        },
+        {
+          "client_id": "476782010195-hp9ldgl3246f6pk7kbfnoksb05edfe3j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcym9YD4VgzU_QpsU6TDFMF9CH4ncQd_I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "476782010195-hp9ldgl3246f6pk7kbfnoksb05edfe3j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
