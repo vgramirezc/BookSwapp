@@ -2,12 +2,10 @@ package co.edu.unal.bookswapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +14,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -56,7 +53,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         if(view == registerText) {
             finish();
-            //startActivity(new Intent(this, FirstActivity.class));
+            //startActivity(new Intent(this, SearchActivity.class));
             startActivity(new Intent(this, RegisterActivity.class));
         }
     }
@@ -86,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Toast.makeText(LoginActivity.this, "Bienvenido", Toast.LENGTH_SHORT).show();
                             // TODO: start profile activity
                             finish();
-                            startActivity(new Intent(LoginActivity.this, FirstActivity.class));
+                            startActivity(new Intent(LoginActivity.this, SearchActivity.class));
                         } else {
                             Toast.makeText(LoginActivity.this, "Correo o contraseña incorrecto, intente nuevamente", Toast.LENGTH_SHORT).show();
                         }

@@ -22,7 +22,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".FirstActivity"></activity>
+        <activity android:name=".MessagesActivity"></activity>
+        <activity android:name=".MyOfferActivity"></activity>
+        <activity android:name=".OfferActivity"></activity>
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".SearchActivity"></activity>
     </application>
 
 </manifest>
