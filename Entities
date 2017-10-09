@@ -1,0 +1,30 @@
+///User///
+name (string)
+email (string)
+rate (double)
+description (string/null)
+
+///Book///
+user_id
+title (string)
+author (string)
+description (string)
+date_open (date)
+date_close (date/null)
+state (boolean)
+accepted_book (book_id/null)
+
+///Offer///
+wanted_book (book_id)
+offered_book (book_id)
+date (date)
+state (waiting, cancelled, accepted)
+
+///Meeting///
+user1_id
+user2_id
+date (date)
+place (geopos)
+state (coming, cancelled, ended)
+book1_id
+book2_id
