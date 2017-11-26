@@ -63,7 +63,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 return true;
             case R.id.new_offer:
                 //finish();
-                this.startActivity(new Intent(this, OfferActivity.class));
+                this.startActivity(new Intent(this, NewOfferActivity.class));
                 return true;
             case R.id.my_offer:
                 //finish();

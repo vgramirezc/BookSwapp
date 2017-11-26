@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -63,7 +62,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 return true;
             case R.id.new_offer:
                 //finish();
-                this.startActivity(new Intent(this, OfferActivity.class));
+                this.startActivity(new Intent(this, NewOfferActivity.class));
                 return true;
             case R.id.my_offer:
                 //finish();

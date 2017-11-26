@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <!-- To pick a gallery image or take a photo -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
@@ -24,7 +28,9 @@
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".MessagesActivity"></activity>
         <activity android:name=".MyOfferActivity"></activity>
-        <activity android:name=".OfferActivity"></activity>
+        <activity android:name=".NewOfferActivity" android:label="@string/new_offer_action_bar_label">
+
+        </activity>
         <activity android:name=".ProfileActivity"></activity>
         <activity android:name=".SearchActivity"></activity>
     </application>

@@ -44,7 +44,7 @@ public class MyOfferActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         if(view == OfferButton) {
             finish();
-            startActivity(new Intent(this, OfferActivity.class));
+            startActivity(new Intent(this, NewOfferActivity.class));
         }
         if(view == MessageButton) {
             finish();
@@ -69,7 +69,7 @@ public class MyOfferActivity extends AppCompatActivity implements View.OnClickLi
                 return true;
             case R.id.new_offer:
                 //finish();
-                startActivity(new Intent(this, OfferActivity.class));
+                startActivity(new Intent(this, NewOfferActivity.class));
                 return true;
             case R.id.my_offer:
                 //finish();
