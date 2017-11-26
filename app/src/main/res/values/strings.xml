@@ -14,4 +14,11 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="new_offer_action_bar_label">Crear intercambio</string>
+    <string name="title">Título del libro</string>
+    <string name="author">Autor</string>
+    <string name="description">Descripción</string>
+    <string name="photo">Foto</string>
+    <string name="create_offer">Crear</string>
+    <string name="pick_image_intent_text">Seleccionar Imagen</string>
 </resources>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="co.edu.unal.bookswapp.FirstActivity">
+    tools:context="co.edu.unal.bookswapp.ProfileActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -13,7 +13,7 @@
         android:textAlignment="center"
         android:layout_centerHorizontal="true"
         android:textSize="20dp"
-        android:text="Bookswapp" />
+        android:text="Perfil" />
 
     <LinearLayout
         android:layout_margin="20dp"
@@ -26,43 +26,36 @@
 
         <TextView
             android:layout_margin="20dp"
-            android:text="Libro 1"
-            android:id="@+id/book1"
+            android:text="Usuario (correo)"
+            android:id="@+id/user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
             android:layout_margin="20dp"
-            android:text="Libro 2"
-            android:id="@+id/book2"
+            android:text="Nombre"
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
             android:layout_margin="20dp"
-            android:text="Libro 3"
-            android:id="@+id/book3"
+            android:text="Intereses"
+            android:id="@+id/interests"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
             android:layout_margin="20dp"
-            android:text="Libro 4"
-            android:id="@+id/book4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_margin="20dp"
-            android:text="Libro 5"
-            android:id="@+id/book5"
+            android:text="Puntuación"
+            android:id="@+id/score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <Button
             android:layout_margin="20dp"
-            android:id="@+id/logOutButton"
-            android:text="Log Out"
+            android:id="@+id/editButton"
+            android:text="Editar Perfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

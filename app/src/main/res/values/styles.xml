@@ -6,6 +6,20 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionBarStyle">@style/CustomActionBar</item>
+        <item name="actionOverflowButtonStyle">@style/DotsActionBar</item>
     </style>
 
+    <style name="CustomActionBar" parent="Widget.AppCompat.Light.ActionBar">
+        <item name="background">@android:color/white</item>
+        <item name="titleTextStyle">@style/CustomTextColor</item>
+    </style>
+
+    <style name="CustomTextColor" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/colorLightBlue</item>
+    </style>
+    <style name="DotsActionBar" parent="Widget.AppCompat.Light.ActionButton.Overflow">
+        <item name="android:tint">@color/colorLightBlue</item>
+    </style>
+    
 </resources>
