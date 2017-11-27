@@ -9,7 +9,7 @@
 
     <!-- To pick a gallery image or take a photo -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -18,27 +18,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".LoginActivity" android:label="@string/login_action_bar_label">
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+        <activity
+            android:name=".DrawerActivity"
+            android:label="@string/title_activity_drawer"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" android:label="@string/register_action_bar_label"></activity>
         <activity android:name=".MessagesActivity" android:label="@string/messages_action_bar_label"></activity>
         <activity android:name=".MyOfferActivity" android:label="@string/my_offer_action_bar_label"></activity>
         <activity android:name=".NewOfferActivity" android:label="@string/new_offer_action_bar_label"></activity>
         <activity android:name=".ProfileActivity" android:label="@string/profile_action_bar_label"></activity>
         <activity android:name=".SearchActivity" android:label="@string/search_action_bar_label"></activity>
-=======
-        <activity android:name=".MessagesActivity"></activity>
-        <activity android:name=".MyOfferActivity" android:label="Mis intercambios"></activity>
-        <activity android:name=".NewOfferActivity" android:label="@string/new_offer_action_bar_label"></activity>
-        <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".SearchActivity" android:label="Buscar libro"></activity>
-
->>>>>>> 2f28f9587062afac2d5c7903282e8c2121d190df
     </application>
 
 </manifest>

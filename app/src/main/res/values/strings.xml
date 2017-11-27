@@ -11,8 +11,8 @@
     <string name="error_invalid_password">Contraseña Muy Corta</string>
     <string name="error_incorrect_password">Contraseña Incorrecta</string>
     <string name="error_field_required">Este Campo Es Requerido</string>
-    <string name="permission_rationale">"Permiso De Contacto Necesario Para Completar Email."
-    </string>
+    <string name="permission_rationale">"Permiso De Contacto Necesario Para Completar Email."</string>
+
     <string name="messages_action_bar_label">BookSwapp - Mensajes</string>
     <string name="my_offer_action_bar_label">BookSwapp - Mis Ofertas</string>
     <string name="new_offer_action_bar_label">BookSwapp - Crear Intercambio</string>
@@ -20,10 +20,46 @@
     <string name="search_action_bar_label">BookSwapp - Buscar Libros</string>
     <string name="register_action_bar_label">BookSwapp - Registro</string>
     <string name="login_action_bar_label">BookSwapp</string>
+
+    <string name="insert_email">Ingrese su correo electrónico</string>
+    <string name="insert_password">Ingrese su contraseña</string>
+    <string name="sigin_normal">Iniciar sesion</string>
+    <string name="sigin_google">INICIAR CON GOOGLE</string>
+    <string name="not_account">¿No tienes cuenta? Resgistrate <u>acá</u>.</string>
+
+    <!-- Strings related to register -->
+    <string name="user_registration">Registro de usuarios</string>
+    <string name="repeat_password">Repita su contraseña</string>
+    <string name="signup_normal">Registrarse</string>
+    <string name="already_registered">¿Ya tienes cuenta? Inicia sesion <u>acá</u>.</string>
+
+    <string name="profile">Mi Perfil</string>
+    <string name="search_book">Buscar Libro</string>
+    <string name="new_offer">Nueva Oferta</string>
+    <string name="my_offers">Mis Ofertas</string>
+    <string name="messages">Mensajes</string>
+    <string name="log_out">Cerrar Sesion</string>
+
     <string name="title">Título del libro</string>
     <string name="author">Autor</string>
     <string name="description">Descripción</string>
     <string name="photo">Foto</string>
     <string name="create_offer">Crear</string>
     <string name="pick_image_intent_text">Seleccionar Imagen</string>
+
+    <string-array name="states_list">
+        <item>Todos</item>
+        <item>Abiertos</item>
+        <item>Cerrados</item>
+        <item>Reservados</item>
+    </string-array>
+
+    <string name="title_activity_drawer">DrawerActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+
 </resources>
