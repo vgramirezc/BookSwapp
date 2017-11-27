@@ -15,6 +15,12 @@
     <string name="signup_normal">Registrarse</string>
     <string name="already_registered">¿Ya tienes cuenta? Inicia sesion <u>acá</u>.</string>
 
+    <string name="profile">Mi Perfil</string>
+    <string name="search_book">Buscar Libro</string>
+    <string name="new_offer">Nueva Oferta</string>
+    <string name="my_offers">Mis Ofertas</string>
+    <string name="messages">Mensajes</string>
+    <string name="log_out">Cerrar Sesion</string>
 
     <string name="new_offer_action_bar_label">Crear intercambio</string>
     <string name="title">Título del libro</string>
@@ -23,7 +29,12 @@
     <string name="photo">Foto</string>
     <string name="create_offer">Crear</string>
     <string name="pick_image_intent_text">Seleccionar Imagen</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 
 
 </resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_profile"
+            android:title="@string/profile" />
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/ic_my_offers"
+            android:title="@string/my_offers" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_search_book"
+            android:title="@string/search_book" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_new_offer"
+            android:title="@string/new_offer" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_messages"
+            android:title="@string/messages" />
+    </group>
+
+    <item android:title="Administrar Cuenta">
+        <menu>
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_logout"
+                android:title="@string/log_out" />
+        </menu>
+    </item>
+
+</menu>

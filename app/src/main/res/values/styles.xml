@@ -18,8 +18,18 @@
     <style name="CustomTextColor" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/colorLightBlue</item>
     </style>
+
     <style name="DotsActionBar" parent="Widget.AppCompat.Light.ActionButton.Overflow">
         <item name="android:tint">@color/colorLightBlue</item>
     </style>
-    
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>
