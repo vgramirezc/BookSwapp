@@ -19,18 +19,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity" android:label="@string/login_action_bar_label">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".MessagesActivity"></activity>
-        <activity android:name=".MyOfferActivity"></activity>
+        <activity android:name=".RegisterActivity" android:label="@string/register_action_bar_label"></activity>
+        <activity android:name=".MessagesActivity" android:label="@string/messages_action_bar_label"></activity>
+        <activity android:name=".MyOfferActivity" android:label="@string/my_offer_action_bar_label"></activity>
         <activity android:name=".NewOfferActivity" android:label="@string/new_offer_action_bar_label"></activity>
-        <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".SearchActivity" android:label="Buscar libro"></activity>
+        <activity android:name=".ProfileActivity" android:label="@string/profile_action_bar_label"></activity>
+        <activity android:name=".SearchActivity" android:label="@string/search_action_bar_label"></activity>
     </application>
 
 </manifest>

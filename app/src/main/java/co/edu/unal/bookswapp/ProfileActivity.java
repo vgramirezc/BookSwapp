@@ -9,8 +9,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 /**
  * Created by ivanc on 9/10/2017.
@@ -19,10 +27,16 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth auth;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mProfileDatabaseReference;
 
     private final String TAG = RegisterActivity.class.getSimpleName();
 
     private Button editButton;
+    private TextView user;
+    private TextView name;
+    private TextView interests;
+    private TextView score;
     private ProgressDialog progressDialog;
 
     @Override
@@ -31,8 +45,34 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_profile);
 
         auth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
 
         editButton = (Button) findViewById(R.id.editButton);
+        user = (TextView) findViewById(R.id.user);
+        name = (TextView) findViewById(R.id.name);
+        interests = (TextView) findViewById(R.id.interests);
+        score = (TextView) findViewById(R.id.score);
+
+        mProfileDatabaseReference = mFirebaseDatabase.getReference().child("users").child(auth.getCurrentUser().getUid());
+        mProfileDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Profile perfil = dataSnapshot.getValue(Profile.class);
+                user.setText(perfil.getEmail());
+                name.setText(perfil.getName());
+                interests.setText(perfil.getInterests());
+                if(perfil.getNumberscores()>0){
+                    double puntaje = perfil.getScore()/perfil.getNumberscores();
+                    score.setText(Double.toString(puntaje));
+                }else{
+                    score.setText("No tiene calificación todavía");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
         editButton.setOnClickListener(this);
         progressDialog = new ProgressDialog(this);
