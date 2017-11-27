@@ -21,4 +21,12 @@
     <string name="photo">Foto</string>
     <string name="create_offer">Crear</string>
     <string name="pick_image_intent_text">Seleccionar Imagen</string>
+
+    <string-array name="states_list">
+        <item>Todos</item>
+        <item>Abiertos</item>
+        <item>Reservados</item>
+        <item>Cerrados</item>
+    </string-array>
+
 </resources>
