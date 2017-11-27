@@ -27,7 +27,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" android:theme="@style/Theme.AppCompat.NoActionBar">
+
+
+        </activity>
         <activity android:name=".MessagesActivity"></activity>
         <activity android:name=".MyOfferActivity"></activity>
         <activity android:name=".NewOfferActivity" android:label="@string/new_offer_action_bar_label">

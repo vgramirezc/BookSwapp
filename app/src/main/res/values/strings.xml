@@ -3,17 +3,19 @@
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+    <string name="insert_email">Ingrese su correo electrónico</string>
+    <string name="insert_password">Ingrese su contraseña</string>
+    <string name="sigin_normal">Iniciar sesion</string>
+    <string name="sigin_google">INICIAR CON GOOGLE</string>
+    <string name="not_account">¿No tienes cuenta? Resgistrate <u>acá</u>.</string>
+
+    <!-- Strings related to register -->
+    <string name="user_registration">Registro de usuarios</string>
+    <string name="repeat_password">Repita su contraseña</string>
+    <string name="signup_normal">Registrarse</string>
+    <string name="already_registered">¿Ya tienes cuenta? Inicia sesion <u>acá</u>.</string>
+
+
     <string name="new_offer_action_bar_label">Crear intercambio</string>
     <string name="title">Título del libro</string>
     <string name="author">Autor</string>
@@ -21,4 +23,7 @@
     <string name="photo">Foto</string>
     <string name="create_offer">Crear</string>
     <string name="pick_image_intent_text">Seleccionar Imagen</string>
+
+
+
 </resources>
