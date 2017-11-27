@@ -62,6 +62,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         auth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
+        updateUI();
+
         emailText = (EditText) findViewById(R.id.emailTextEdit);
         passwordText = (EditText) findViewById(R.id.passwordTextEdit);
         loginButton = (Button) findViewById(R.id.loginButton);
@@ -89,6 +91,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }).addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
+    }
+
+    private void updateUI() {
+        FirebaseUser user = auth.getCurrentUser();
+        if(user != null) {
+            finish();
+            startActivity(new Intent(LoginActivity.this, DrawerActivity.class));
+        }
     }
 
     @Override
@@ -140,8 +150,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = auth.getCurrentUser();
-                            finish();
-                            startActivity(new Intent(LoginActivity.this, DrawerActivity.class));
+                            updateUI();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -194,8 +203,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 public void onCancelled(DatabaseError databaseError) {
                                 }
                             });
-                            finish();
-                            startActivity(new Intent(LoginActivity.this, DrawerActivity.class));
+                            updateUI();
                         } else {
                             Toast.makeText(LoginActivity.this, "Correo o contraseña incorrecto, intente nuevamente", Toast.LENGTH_SHORT).show();
                         }
