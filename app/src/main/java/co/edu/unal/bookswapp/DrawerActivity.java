@@ -3,6 +3,7 @@ package co.edu.unal.bookswapp;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -60,17 +61,18 @@ public class DrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.profile) {
 
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.my_offers) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.search_book) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.new_offer) {
+            Fragment f = new NewOfferFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_content, f).commit();
+        } else if (id == R.id.messages) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.log_out) {
 
         }
 

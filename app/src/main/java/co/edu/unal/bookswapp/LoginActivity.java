@@ -131,8 +131,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = auth.getCurrentUser();
                             finish();
-                            startActivity(new Intent(LoginActivity.this, SearchActivity.class));
-
+                            startActivity(new Intent(LoginActivity.this, DrawerActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -170,7 +169,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Toast.makeText(LoginActivity.this, "Bienvenido", Toast.LENGTH_SHORT).show();
                             // TODO: start profile activity
                             finish();
-                            startActivity(new Intent(LoginActivity.this, SearchActivity.class));
+                            startActivity(new Intent(LoginActivity.this, DrawerActivity.class));
                         } else {
                             Toast.makeText(LoginActivity.this, "Correo o contraseña incorrecto, intente nuevamente", Toast.LENGTH_SHORT).show();
                         }
