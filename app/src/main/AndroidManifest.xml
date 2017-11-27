@@ -28,11 +28,9 @@
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".MessagesActivity"></activity>
         <activity android:name=".MyOfferActivity"></activity>
-        <activity android:name=".NewOfferActivity" android:label="@string/new_offer_action_bar_label">
-
-        </activity>
+        <activity android:name=".NewOfferActivity" android:label="@string/new_offer_action_bar_label"></activity>
         <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".SearchActivity" android:label="Buscar libro"></activity>
     </application>
 
 </manifest>
