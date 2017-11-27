@@ -29,6 +29,14 @@
     <string name="photo">Foto</string>
     <string name="create_offer">Crear</string>
     <string name="pick_image_intent_text">Seleccionar Imagen</string>
+
+    <string-array name="states_list">
+        <item>Todos</item>
+        <item>Abiertos</item>
+        <item>Cerrados</item>
+        <item>Reservados</item>
+    </string-array>
+
     <string name="title_activity_drawer">DrawerActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
