@@ -1,10 +1,11 @@
 package co.edu.unal.bookswapp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -25,9 +26,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.shobhitpuri.custombuttons.GoogleSignInButton;
+
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener  {
 
@@ -39,6 +46,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText emailText, passwordText;
     private Button loginButton;
     private TextView registerText;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mProfileDatabaseReference;
 
     GoogleSignInButton googleButton;
     GoogleApiClient googleApliClient;
@@ -51,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         auth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
 
         emailText = (EditText) findViewById(R.id.emailTextEdit);
         passwordText = (EditText) findViewById(R.id.passwordTextEdit);
@@ -167,7 +177,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         progressDialog.dismiss();
                         if(task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Bienvenido", Toast.LENGTH_SHORT).show();
-                            // TODO: start profile activity
+                            mProfileDatabaseReference = mFirebaseDatabase.getReference().child("users").child(auth.getCurrentUser().getUid());
+                            mProfileDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if(!dataSnapshot.exists()){
+                                        Profile newProfile = new Profile(auth.getCurrentUser().getUid(),
+                                                auth.getCurrentUser().getEmail(),
+                                                auth.getCurrentUser().getDisplayName(),
+                                                "", 0, 0);
+                                        mProfileDatabaseReference.setValue(newProfile);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
                             finish();
                             startActivity(new Intent(LoginActivity.this, DrawerActivity.class));
                         } else {

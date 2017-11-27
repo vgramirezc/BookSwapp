@@ -1,8 +1,26 @@
 <resources>
     <string name="app_name">BookSwapp</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_login">Ingresar</string>
 
     <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Contraseña (opcional)</string>
+    <string name="action_sign_in">Ingresar o Registrarse</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">Email Invalido</string>
+    <string name="error_invalid_password">Contraseña Muy Corta</string>
+    <string name="error_incorrect_password">Contraseña Incorrecta</string>
+    <string name="error_field_required">Este Campo Es Requerido</string>
+    <string name="permission_rationale">"Permiso De Contacto Necesario Para Completar Email."</string>
+
+    <string name="messages_action_bar_label">BookSwapp - Mensajes</string>
+    <string name="my_offer_action_bar_label">BookSwapp - Mis Ofertas</string>
+    <string name="new_offer_action_bar_label">BookSwapp - Crear Intercambio</string>
+    <string name="profile_action_bar_label">BookSwapp - Perfil de Usuario</string>
+    <string name="search_action_bar_label">BookSwapp - Buscar Libros</string>
+    <string name="register_action_bar_label">BookSwapp - Registro</string>
+    <string name="login_action_bar_label">BookSwapp</string>
+
     <string name="insert_email">Ingrese su correo electrónico</string>
     <string name="insert_password">Ingrese su contraseña</string>
     <string name="sigin_normal">Iniciar sesion</string>
@@ -22,7 +40,6 @@
     <string name="messages">Mensajes</string>
     <string name="log_out">Cerrar Sesion</string>
 
-    <string name="new_offer_action_bar_label">Crear intercambio</string>
     <string name="title">Título del libro</string>
     <string name="author">Autor</string>
     <string name="description">Descripción</string>
