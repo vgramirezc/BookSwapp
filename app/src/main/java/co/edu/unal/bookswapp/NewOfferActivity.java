@@ -71,7 +71,6 @@ public class NewOfferActivity extends AppCompatActivity{
     private Uri mSelectedImageUri;
     private Toast mToast;
 
-
     ///////////////////////       OVERRIDDEN METHODS      ///////////////////////////////////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {

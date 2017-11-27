@@ -31,6 +31,14 @@
         <activity android:name=".NewOfferActivity" android:label="@string/new_offer_action_bar_label"></activity>
         <activity android:name=".ProfileActivity" android:label="@string/profile_action_bar_label"></activity>
         <activity android:name=".SearchActivity" android:label="@string/search_action_bar_label"></activity>
+=======
+        <activity android:name=".MessagesActivity"></activity>
+        <activity android:name=".MyOfferActivity" android:label="Mis intercambios"></activity>
+        <activity android:name=".NewOfferActivity" android:label="@string/new_offer_action_bar_label"></activity>
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".SearchActivity" android:label="Buscar libro"></activity>
+
+>>>>>>> 2f28f9587062afac2d5c7903282e8c2121d190df
     </application>
 
 </manifest>
