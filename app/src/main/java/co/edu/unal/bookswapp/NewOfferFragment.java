@@ -111,6 +111,12 @@ public class NewOfferFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        ( (DrawerActivity) getActivity() ).mToolbar.setTitle( R.string.new_offer );
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mImageButton = (ImageButton) view.findViewById( R.id.ib_new_offer );

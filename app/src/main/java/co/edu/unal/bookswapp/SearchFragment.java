@@ -91,6 +91,12 @@ public class SearchFragment extends Fragment implements RecyclerViewListener {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        ( (DrawerActivity) getActivity() ).mToolbar.setTitle( R.string.search_book );
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView = (RecyclerView) view.findViewById( R.id.rv_search );
