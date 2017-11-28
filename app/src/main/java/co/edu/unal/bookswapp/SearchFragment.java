@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -61,6 +62,7 @@ public class SearchFragment extends Fragment implements RecyclerViewListener {
     //Firebase variables
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mOffersDatabaseReference;
+    private FirebaseAuth mFirebaseAuth;
 
     //Other variables
     private ArrayList<Offer> mOffers;
@@ -134,39 +136,12 @@ public class SearchFragment extends Fragment implements RecyclerViewListener {
         mRecyclerView = (RecyclerView) view.findViewById( R.id.rv_search );
 
         mFireBaseDatabase = FirebaseDatabase.getInstance();
+        mFirebaseAuth = FirebaseAuth.getInstance();
         mOffersDatabaseReference = mFireBaseDatabase.getReference().child( "offers" );
 
         mOffers = new ArrayList<Offer>();
         initRecyclerView();
     }
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu, menu);
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        changeSearchViewTextColor(searchView);
-
-        searchView.setOnQueryTextListener(
-                new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        changeResultOffers( query.toLowerCase() );
-                        return true;
-                    }
-                    @Override
-                    public boolean onQueryTextChange(String newText) {
-                        return false;
-                    }
-                }
-        );
-
-        return true;
-    }*/
 
     @Override
     public void onItemClick(View v, int position) {
@@ -177,26 +152,13 @@ public class SearchFragment extends Fragment implements RecyclerViewListener {
 
     private void initRecyclerView(){
         LinearLayoutManager layoutManager = new LinearLayoutManager( getActivity() );
+        layoutManager.setReverseLayout( true );
+        layoutManager.setStackFromEnd( true );
         mRecyclerView.setLayoutManager( layoutManager );
         mOfferAdapter = new OfferAdapter( mOffers, this );
         mRecyclerView.setAdapter( mOfferAdapter );
         mRecyclerView.addItemDecoration( new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        Query offersQuery = mOffersDatabaseReference.orderByChild( "state" ).equalTo( 0 ).limitToFirst( MAX_CNT_RESULTS );
-        offersQuery.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                mOffers.add( dataSnapshot.getValue( Offer.class ) );
-                mOfferAdapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
+        changeResultOffers( "" );
     }
 
     private void changeSearchViewTextColor(View view) {
@@ -216,13 +178,13 @@ public class SearchFragment extends Fragment implements RecyclerViewListener {
     private void changeResultOffers( final String query ){
         mOffers.clear();
         mOfferAdapter.notifyDataSetChanged();
-        Query offersQuery = mOffersDatabaseReference.orderByChild( "state" ).equalTo( 0 ).limitToFirst( MAX_CNT_RESULTS );
+        Query offersQuery = mOffersDatabaseReference.orderByChild( "timestamp" ).limitToLast( MAX_CNT_RESULTS );
         offersQuery.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Offer resultOffer = dataSnapshot.getValue( Offer.class );
-                if( resultOffer.getTitle().toLowerCase().contains( query ) || resultOffer.getAuthor().toLowerCase().contains( query ) ) {
-                    mOffers.add(resultOffer);
+                Offer offer = dataSnapshot.getValue( Offer.class );
+                if( offer.getState() == 0 && !mFirebaseAuth.getCurrentUser().getUid().equals( offer.getOwnerId() ) && (offer.getTitle().toLowerCase().contains( query ) || offer.getAuthor().toLowerCase().contains( query )) ) {
+                    mOffers.add(offer);
                     mOfferAdapter.notifyDataSetChanged();
                 }
             }
