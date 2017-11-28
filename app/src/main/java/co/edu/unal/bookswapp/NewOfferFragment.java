@@ -1,6 +1,7 @@
 package co.edu.unal.bookswapp;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -181,13 +182,21 @@ public class NewOfferFragment extends Fragment {
                     showToast( "Debe subir una imagen del libro" );
                 }
                 else{
-                    Offer newOffer = new Offer(mFirebaseAuth.getCurrentUser().getDisplayName(),
+
+                    String id = mOffersDatabaseReference.push().getKey();
+                    Offer newOffer = new Offer(id, mFirebaseAuth.getCurrentUser().getDisplayName(),
                             mFirebaseAuth.getCurrentUser().getUid(),
                             mTitleEditText.getText().toString().trim(),
                             mAuthorEditText.getText().toString().trim(),
                             mDescriptionEditText.getText().toString().trim(),
                             mPhotoUri.toString(), 0, null, ServerValue.TIMESTAMP);
                     mOffersDatabaseReference.push().setValue(newOffer);
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    Bundle args = new Bundle();
+                    args.putString("offer_id", id);
+                    Fragment f = new OfferViewFragment();
+                    f.setArguments(args);
+                    fragmentTransaction.replace(R.id.main_content, f).addToBackStack(null).commit();
                 }
             }
         });
