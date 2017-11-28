@@ -26,6 +26,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -185,7 +186,7 @@ public class NewOfferFragment extends Fragment {
                             mTitleEditText.getText().toString().trim(),
                             mAuthorEditText.getText().toString().trim(),
                             mDescriptionEditText.getText().toString().trim(),
-                            mPhotoUri.toString(), 0, null);
+                            mPhotoUri.toString(), 0, null, ServerValue.TIMESTAMP);
                     mOffersDatabaseReference.push().setValue(newOffer);
                 }
             }
@@ -275,6 +276,7 @@ public class NewOfferFragment extends Fragment {
 
     private void showToast( String message ){
         if( mToast != null ) mToast.cancel();
-        mToast.makeText( getActivity(), message, Toast.LENGTH_SHORT ).show();
+        mToast = Toast.makeText( getActivity(), message, Toast.LENGTH_SHORT );
+        mToast.show();
     }
 }

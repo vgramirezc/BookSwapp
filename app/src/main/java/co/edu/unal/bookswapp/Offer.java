@@ -20,10 +20,11 @@ public class Offer {
     private String photoUrl;
     private int state;
     private String userReservedId;
+    private Object timestamp;
 
     public Offer(){}
 
-    public Offer(String ownerName, String ownerId, String title, String author, String description, String photoUrl, int state, String userReservedId) {
+    public Offer(String ownerName, String ownerId, String title, String author, String description, String photoUrl, int state, String userReservedId, Object timestamp) {
         this.ownerName = ownerName;
         this.ownerId = ownerId;
         this.title = title;
@@ -32,6 +33,7 @@ public class Offer {
         this.photoUrl = photoUrl;
         this.state = state;
         this.userReservedId = userReservedId;
+        this.timestamp = timestamp;
     }
 
     public String getOwnerName() {
@@ -97,6 +99,10 @@ public class Offer {
     public void setUserReservedId(String userReservedId) {
         this.userReservedId = userReservedId;
     }
+
+    public Object getTimestamp(){ return timestamp; }
+
+    public void setTimestamp(long timestamp){ this.timestamp = timestamp; }
 
     @Override
     public String toString() {
