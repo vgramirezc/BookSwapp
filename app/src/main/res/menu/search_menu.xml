@@ -4,19 +4,8 @@
     <item
         android:id="@+id/action_search"
         android:title="Buscar"
+        android:iconTint="@color/colorLightBlue"
         android:icon="@android:drawable/ic_menu_search"
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"/>
-    <item android:id="@+id/search"
-        android:title="Buscar Libro" />
-    <item android:id="@+id/new_offer"
-        android:title="Nueva Oferta" />
-    <item android:id="@+id/my_offer"
-        android:title="Mis Ofertas" />
-    <item android:id="@+id/messages"
-        android:title="Mensajes" />
-    <item android:id="@+id/profile"
-        android:title="Mi Perfil" />
-    <item android:id="@+id/quit"
-        android:title="Log Out" />
 </menu>

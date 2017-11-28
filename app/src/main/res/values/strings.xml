@@ -50,8 +50,8 @@
     <string-array name="states_list">
         <item>Todos</item>
         <item>Abiertos</item>
-        <item>Cerrados</item>
         <item>Reservados</item>
+        <item>Cerrados</item>
     </string-array>
 
     <string name="title_activity_drawer">DrawerActivity</string>

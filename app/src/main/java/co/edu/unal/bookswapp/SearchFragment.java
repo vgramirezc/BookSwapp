@@ -9,7 +9,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -88,6 +92,32 @@ public class SearchFragment extends Fragment implements RecyclerViewListener {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        setHasOptionsMenu( true );
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem mSearchMenuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) mSearchMenuItem.getActionView();
+        changeSearchViewTextColor(searchView);
+
+        searchView.setOnQueryTextListener(
+                new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        changeResultOffers( query.toLowerCase() );
+                        return true;
+                    }
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        if( newText.length() == 0 ){
+                            changeResultOffers( "" );
+                        }
+                        return true;
+                    }
+                }
+        );
     }
 
     @Override
