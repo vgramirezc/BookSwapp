@@ -23,7 +23,6 @@
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -36,11 +35,6 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-        <activity android:name=".MessagesActivity" android:label="@string/messages_action_bar_label"></activity>
-        <activity android:name=".MyOfferActivity" android:label="@string/my_offer_action_bar_label"></activity>
-        <activity android:name=".NewOfferActivity" android:label="@string/new_offer_action_bar_label"></activity>
-        <activity android:name=".ProfileActivity" android:label="@string/profile_action_bar_label"></activity>
-        <activity android:name=".SearchActivity" android:label="@string/search_action_bar_label"></activity>
     </application>
 
 </manifest>

@@ -1,11 +1,14 @@
 package co.edu.unal.bookswapp;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -61,15 +64,6 @@ public class DrawerActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -79,6 +73,11 @@ public class DrawerActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    public void replaceFragment(Fragment f) {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_content, f).addToBackStack(null).commit();
     }
 
     private void updateUI() {
@@ -95,7 +94,13 @@ public class DrawerActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            FragmentManager fg = getFragmentManager();
+            Log.i("stack fragment", fg.getBackStackEntryCount() + "");
+            if (fg.getBackStackEntryCount() != 0) {
+                fg.popBackStackImmediate();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -107,19 +112,17 @@ public class DrawerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.profile) {
-
+            replaceFragment( new ProfileFragment() );
         } else if (id == R.id.my_offers) {
-
+            replaceFragment( new MyOfferFragment() );
         } else if (id == R.id.search_book) {
-
+            replaceFragment( new SearchFragment() );
         } else if (id == R.id.new_offer) {
-            Fragment f = new NewOfferFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_content, f).commit();
+            replaceFragment( new NewOfferFragment() );
         } else if (id == R.id.messages) {
-
+            replaceFragment( new MessageFragment() );
         } else if (id == R.id.log_out) {
             auth.signOut();
-
             Auth.GoogleSignInApi.signOut(googleApliClient).setResultCallback(
                     new ResultCallback<Status>() {
                         @Override
