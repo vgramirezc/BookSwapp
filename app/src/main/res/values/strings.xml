@@ -73,6 +73,7 @@
 
     <string name="reservation_not_closed">Sin cerrar</string>
     <string name="reservation_closed">Cerradas</string>
+    <string name="title_activity_chat">ChatActivity</string>
 
 
 </resources>

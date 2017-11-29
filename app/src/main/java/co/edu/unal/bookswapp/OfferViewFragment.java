@@ -160,6 +160,7 @@ public class OfferViewFragment extends Fragment {
                                 String email = txtUrl.getText().toString();
                                 mOffersDatabaseReference.child(offerId).child("state").setValue(1);
                                 mOffersDatabaseReference.child(offerId).child("userReservedId").setValue(email);
+
                                 //TODO instead of email, get the id querying the bd
                             }
                         })
@@ -182,7 +183,41 @@ public class OfferViewFragment extends Fragment {
         startChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO here you go Ivan :p
+                final DatabaseReference cur = FirebaseDatabase.getInstance().getReference().child("chats_of").child(currentOffer.getOwnerId());
+                final String meId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                cur.child(meId).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String chatId;
+                                Log.i("chat_id", dataSnapshot.toString());
+                                if(dataSnapshot.getValue() == null) {
+                                    chatId = FirebaseDatabase.getInstance().getReference()
+                                            .child("chats_of").child(currentOffer.getOwnerId())
+                                            .child(meId).push().getKey();
+                                    FirebaseDatabase.getInstance().getReference()
+                                            .child("chats_of").child(meId).
+                                            child(currentOffer.getOwnerId())
+                                            .setValue(chatId);
+                                } else {
+                                    chatId = dataSnapshot.getValue(String.class);
+                                }
+
+                                // TODO es necesario remover el listener?
+                                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                                Bundle args = new Bundle();
+                                args.putString("chat_id", chatId);
+                                Log.i("chat_id", chatId);
+                                Fragment f = new ChatFragment();
+                                f.setArguments(args);
+                                fragmentTransaction.replace(R.id.main_content, f).addToBackStack(null).commit();
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
             }
         });
 
@@ -205,6 +240,7 @@ public class OfferViewFragment extends Fragment {
             }
         });
     }
+
 
     private void showButtons() {
         reserveButton.setVisibility(View.GONE);
