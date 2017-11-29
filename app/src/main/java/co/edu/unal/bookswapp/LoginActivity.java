@@ -3,6 +3,7 @@ package co.edu.unal.bookswapp;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -155,11 +156,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if(!dataSnapshot.exists()){
-                                        Profile newProfile = new Profile(mAuth.getCurrentUser().getUid(),
-                                                mAuth.getCurrentUser().getEmail(),
-                                                mAuth.getCurrentUser().getDisplayName(),
-                                                "", 0, 0);
-                                        mProfileDatabaseReference.setValue(newProfile);
+                                        insertProfileInDatabase();
                                     }
                                 }
 
@@ -208,11 +205,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if(!dataSnapshot.exists()){
-                                        Profile newProfile = new Profile(mAuth.getCurrentUser().getUid(),
-                                                mAuth.getCurrentUser().getEmail(),
-                                                mAuth.getCurrentUser().getDisplayName(),
-                                                "", 0, 0);
-                                        mProfileDatabaseReference.setValue(newProfile);
+                                        insertProfileInDatabase();
                                     }
                                 }
 
@@ -226,5 +219,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                     }
                 });
+    }
+
+    void insertProfileInDatabase() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        Uri cur = user.getPhotoUrl();
+        String url = "";
+        if(cur != null) url = cur.toString();
+
+        Profile xdlad = new Profile();
+        Profile newProfile = new Profile(user.getUid(), user.getEmail(), user.getDisplayName(),
+                "", user.getPhoneNumber(), "", 0, 0, 0, 0,
+                url);
+        mProfileDatabaseReference.setValue(newProfile);
     }
 }
