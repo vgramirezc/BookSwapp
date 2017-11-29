@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -182,10 +183,36 @@ public class MessageFragment extends Fragment implements RecyclerViewListener {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         String uid = dataSnapshot.getKey();
-                        DatabaseReference user = mUsersDatabaseReference.child( uid );
-                        ChatInfo chatInfo = new ChatInfo( user.child("name").toString(), "hola", user.child("urlImage").toString() );
-                        mUsers.add( chatInfo );
-                        mUserAdapter.notifyDataSetChanged();
+                        //mUsersDatabaseReference.child( uid );
+                        mUsersDatabaseReference.orderByChild("id").equalTo( uid ).addChildEventListener(
+                                new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                        Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+                                        if( !map.get( "name" ).toString().contains( query ) && !map.get( "email" ).toString().contains( query ) ) return;
+                                        ChatInfo chatInfo = new ChatInfo( map.get( "name" ).toString(), map.get( "email" ).toString(), map.get("urlImage").toString() );
+                                        mUsers.add( chatInfo );
+                                        mUserAdapter.notifyDataSetChanged();
+                                    }
+                                    @Override
+                                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                                    }
+                                    @Override
+                                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                                    }
+                                    @Override
+                                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                    }
+                                }
+                        );
+                        //Log.w( "name", user.child("name").toString() );
+                        //Log.w( "url", user.child("urlImage").toString() );
+                        //ChatInfo chatInfo = new ChatInfo( user.child("name").toString(), "hola", user.child("urlImage").toString() );
+                        //mUsers.add( chatInfo );
+                        //mUserAdapter.notifyDataSetChanged();
                     }
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {

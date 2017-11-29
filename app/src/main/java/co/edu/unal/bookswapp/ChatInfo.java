@@ -6,14 +6,12 @@ package co.edu.unal.bookswapp;
 
 public class ChatInfo {
     String user;
-    String lastMessage;
+    String email;
     String userImageUri;
 
-    public ChatInfo(){}
-
-    public ChatInfo(String user, String lastMessage, String userImageUri) {
+    public ChatInfo(String user, String email, String userImageUri) {
         this.user = user;
-        this.lastMessage = lastMessage;
+        this.email = email;
         this.userImageUri = userImageUri;
     }
 
@@ -25,12 +23,12 @@ public class ChatInfo {
         this.user = user;
     }
 
-    public String getLastMessage() {
-        return lastMessage;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLastMessage(String lastMessage) {
-        this.lastMessage = lastMessage;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUserImageUri() {

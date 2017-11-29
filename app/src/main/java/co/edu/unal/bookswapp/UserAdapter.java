@@ -36,7 +36,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder>{
     @Override
     public void onBindViewHolder(UserHolder holder, int position) {
         holder.textViewName.setText( mUsers.get( position ).getUser() );
-        holder.textViewLastMessage.setText( mUsers.get( position ).getLastMessage() );
+        holder.textViewLastMessage.setText( mUsers.get( position ).getEmail() );
         Glide.with(holder.imageView.getContext())
                 .load( mUsers.get( position ).getUserImageUri() )
                 .into( holder.imageView );
