@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorLightBlue"
-    tools:context="co.edu.unal.bookswapp.ProfileActivity">
+    android:background="@color/colorLightBlue">
 
     <LinearLayout
         android:layout_margin="20dp"
@@ -28,7 +27,7 @@
 
             <TextView
                 android:layout_margin="20dp"
-                android:text="Usuario (correo): "
+                android:text="Usuario: "
                 android:id="@+id/text_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -58,11 +57,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <TextView
+            <EditText
                 android:layout_margin="20dp"
                 android:text=""
                 android:id="@+id/name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -83,12 +82,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <TextView
+            <EditText
                 android:layout_margin="20dp"
                 android:text=""
                 android:id="@+id/interests"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"/>
 
         </LinearLayout>
 
@@ -120,7 +120,7 @@
         <Button
             android:layout_margin="20dp"
             android:id="@+id/editButton"
-            android:text="Editar Perfil"
+            android:text="Guardar Perfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
