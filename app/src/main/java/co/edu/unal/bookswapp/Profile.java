@@ -19,6 +19,8 @@ public class Profile {
 
     public Profile(String id, String email, String name){
         if(name == null) name = "Nombre no disponible";
+        if(phone == null) phone = "Telefono no disponible";
+        if(city.equals("")) city = "Ciudad no disponible";
         this.id = id;
         this.email = email;
         this.name = name;

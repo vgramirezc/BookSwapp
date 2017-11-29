@@ -2,10 +2,13 @@ package co.edu.unal.bookswapp;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,8 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,6 +63,15 @@ public class ProfileFragment extends Fragment {
     private double numscores, denscores;
 
     private ProgressDialog progressDialog;
+    private TextView nameTextView;
+    private ImageView profileImageView;
+    private TextView ratingTextView;
+    private TextView offersTextView;
+    private TextView interchangeTextView;
+    private TextView emailTextView;
+    private TextView phoneTextView;
+    private TextView cityTextView;
+    private Button updateButton;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -80,12 +95,13 @@ public class ProfileFragment extends Fragment {
         return fragment;
     }
 
+    private String profileId = "XVRA8hKwM9WIJHzjobHsnmStNV63";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            profileId = getArguments().getString("profile_id");
         }
         setHasOptionsMenu( true );
     }
@@ -109,28 +125,47 @@ public class ProfileFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
-        /*saveButton = (Button) view.findViewById(R.id.editButton);
-        user = (TextView) view.findViewById(R.id.user);
-        name = (EditText) view.findViewById(R.id.name);
-        interests = (EditText) view.findViewById(R.id.interests);
-        score = (TextView) view.findViewById(R.id.score);
+        profileImageView = (ImageView) view.findViewById(R.id.profile_image);
+        nameTextView = (TextView) view.findViewById(R.id.name);
+        offersTextView = (TextView) view.findViewById(R.id.offers_count);
+        interchangeTextView = (TextView) view.findViewById(R.id.interchange_count);
+        ratingTextView = (TextView) view.findViewById(R.id.rating_count);
+        emailTextView = (TextView) view.findViewById(R.id.email_profile);
+        phoneTextView = (TextView) view.findViewById(R.id.phone_profile);
+        cityTextView = (TextView) view.findViewById(R.id.city_profile);
 
-        mProfileDatabaseReference = mFirebaseDatabase.getReference().child("users").child(auth.getCurrentUser().getUid());
-        mProfileDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        updateButton = (Button) view.findViewById(R.id.profile_update);
+
+        mProfileDatabaseReference = mFirebaseDatabase.getReference().child("users").child(profileId);
+        mProfileDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Profile perfil = dataSnapshot.getValue(Profile.class);
-                user.setText(perfil.getEmail());
-                name.setText(perfil.getName());
-                interests.setText(perfil.getInterests());
-                if(perfil.getNumberscores()>0){
-                    numscores = perfil.getScore();
-                    denscores = perfil.getNumberscores();
-                    double puntaje = numscores/denscores;
-                    score.setText(Double.toString(puntaje));
-                }else{
-                    score.setText("No tiene calificación todavía");
+                Profile p = dataSnapshot.getValue(Profile.class);
+                nameTextView.setText(p.getName());
+                offersTextView.setText(""+p.getOffersCounter());
+                interchangeTextView.setText(""+p.getInterchangesCounter());
+                if(p.getScoresCounter() > 0)
+                    ratingTextView.setText(""+ (int)(p.getScore() / p.getScoresCounter()) );
+                else
+                    ratingTextView.setText("0");
+                emailTextView.setText(p.getEmail());
+                phoneTextView.setText(p.getPhone());
+                cityTextView.setText(p.getCity());
+
+                if(!p.getUrlImage().equals("")) {
+                    Glide.with(profileImageView.getContext())
+                            .load(p.getUrlImage()).
+                            asBitmap().centerCrop().into(new BitmapImageViewTarget(profileImageView) {
+                        @Override
+                        protected void setResource(Bitmap resource) {
+                            RoundedBitmapDrawable circularBitmapDrawable =
+                                    RoundedBitmapDrawableFactory.create(profileImageView.getContext().getResources(), resource);
+                            circularBitmapDrawable.setCircular(true);
+                            profileImageView.setImageDrawable(circularBitmapDrawable);
+                        }
+                    });
                 }
+
             }
 
             @Override
@@ -138,22 +173,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Profile perfil = new Profile(
-                        auth.getCurrentUser().getUid(),
-                        user.getText().toString(),
-                        name.getText().toString(),
-                        interests.getText().toString(),
-                        numscores,
-                        denscores
-                );
-                mProfileDatabaseReference.setValue(perfil);
+                // TODO abrir nuevo fragmento de editar
             }
         });
 
-        progressDialog = new ProgressDialog(view.getContext());*/
     }
 
     @Override
