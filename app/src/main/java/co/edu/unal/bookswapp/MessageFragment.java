@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -138,14 +139,29 @@ public class MessageFragment extends Fragment implements RecyclerViewListener {
     @Override
     public void onItemClick(View v, int position) {
         Toast.makeText( getActivity(), "Chat con usuario " + mUsers.get( position ).getUser(), Toast.LENGTH_SHORT ).show();
-        /*String id = mOffers.get(position).getId();
-        Log.i("idOffer", mOffers.get(position).toString());
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        Bundle args = new Bundle();
-        args.putString("offer_id", id);
-        Fragment f = new OfferViewFragment();
-        f.setArguments(args);
-        fragmentTransaction.replace(R.id.main_content, f).addToBackStack(null).commit();*/
+        Log.i("Perro", mFirebaseAuth.getCurrentUser().getUid());
+        Log.i("Perro2", mUsers.get( position ).getUserId());
+        mChatOfDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid()).child( mUsers.get( position ).getUserId() )
+
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String id = dataSnapshot.getValue(String.class);
+                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                        Bundle args = new Bundle();
+                        Log.i("chat_chat_id", dataSnapshot.toString());
+                        args.putString("chat_id", id);
+                        Fragment f = new ChatFragment();
+                        f.setArguments(args);
+                        fragmentTransaction.replace(R.id.main_content, f).addToBackStack(null).commit();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
     }
 
     ///////////////////////////// CLASS METHODS /////////////////////////////////////////////////
@@ -190,7 +206,7 @@ public class MessageFragment extends Fragment implements RecyclerViewListener {
                                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                         Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
                                         if( !map.get( "name" ).toString().contains( query ) && !map.get( "email" ).toString().contains( query ) ) return;
-                                        ChatInfo chatInfo = new ChatInfo( map.get( "name" ).toString(), map.get( "email" ).toString(), map.get("urlImage").toString() );
+                                        ChatInfo chatInfo = new ChatInfo( map.get("id").toString(),  map.get( "name" ).toString(), map.get( "email" ).toString(), map.get("urlImage").toString() );
                                         mUsers.add( chatInfo );
                                         mUserAdapter.notifyDataSetChanged();
                                     }

@@ -5,11 +5,13 @@ package co.edu.unal.bookswapp;
  */
 
 public class ChatInfo {
+    String userId;
     String user;
     String email;
     String userImageUri;
 
-    public ChatInfo(String user, String email, String userImageUri) {
+    public ChatInfo(String userId, String user, String email, String userImageUri) {
+        this.userId = userId;
         this.user = user;
         this.email = email;
         this.userImageUri = userImageUri;
@@ -37,5 +39,13 @@ public class ChatInfo {
 
     public void setUserImageUri(String userImageUri) {
         this.userImageUri = userImageUri;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

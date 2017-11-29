@@ -229,5 +229,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         Profile newProfile = new Profile(user.getUid(), user.getEmail(), user.getDisplayName(), user.getPhoneNumber(), url);
         mProfileDatabaseReference.setValue(newProfile);
+
+        FirebaseDatabase.getInstance().getReference().child("email_registred").child(user.getEmail()).setValue(user.getUid());
+
+
     }
 }
