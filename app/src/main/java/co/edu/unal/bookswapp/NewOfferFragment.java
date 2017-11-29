@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -184,13 +185,14 @@ public class NewOfferFragment extends Fragment {
                 else{
 
                     String id = mOffersDatabaseReference.push().getKey();
+                    Log.i("real_id", id);
                     Offer newOffer = new Offer(id, mFirebaseAuth.getCurrentUser().getDisplayName(),
                             mFirebaseAuth.getCurrentUser().getUid(),
                             mTitleEditText.getText().toString().trim(),
                             mAuthorEditText.getText().toString().trim(),
                             mDescriptionEditText.getText().toString().trim(),
                             mPhotoUri.toString(), 0, null, ServerValue.TIMESTAMP);
-                    mOffersDatabaseReference.push().setValue(newOffer);
+                    mOffersDatabaseReference.child(id).setValue(newOffer);
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     Bundle args = new Bundle();
                     args.putString("offer_id", id);

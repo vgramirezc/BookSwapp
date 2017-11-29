@@ -112,6 +112,7 @@ public class OfferViewFragment extends Fragment {
         mOffersDatabaseReference.child(offerId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.i("data", dataSnapshot.toString());
                 currentOffer = dataSnapshot.getValue(Offer.class);
                 Log.i("data", currentOffer.toString());
                 titleTextView.setText(currentOffer.getTitle());
@@ -201,9 +202,9 @@ public class OfferViewFragment extends Fragment {
 
         boolean owner = FirebaseAuth.getInstance().getCurrentUser().getUid().equals(currentOffer.getOwnerId());
         if(owner) {
-            if(getRealStatus( currentOffer.getState() ).equals("Disponible")) {
+            if(getRealStatus( currentOffer.getState() ).equals(getString(R.string.reservation_open))) {
                 reserveButton.setVisibility(View.VISIBLE);
-            } else if( getRealStatus( currentOffer.getState() ).equals("Reservado") ) {
+            } else if( getRealStatus( currentOffer.getState() ).equals(getString(R.string.reservation_reserved)) ) {
                 cancelReserveButton.setVisibility(View.VISIBLE);
                 finishButton.setVisibility(View.VISIBLE);
             }
@@ -217,22 +218,22 @@ public class OfferViewFragment extends Fragment {
         }
 
         /// cambiar color segun state
-        if(getRealStatus( currentOffer.getState() ).equals("Disponible")) {
+        if(getRealStatus( currentOffer.getState() ).equals(getString(R.string.reservation_open))) {
             statusTextView.setTextColor(Color.rgb(0, 153, 0));
         }
-        if(getRealStatus( currentOffer.getState() ).equals("Disponible")) {
+        if(getRealStatus( currentOffer.getState() ).equals(getString(R.string.reservation_reserved))) {
             statusTextView.setTextColor(Color.rgb(153, 76, 0));
         }
-        if(getRealStatus( currentOffer.getState() ).equals("Disponible")) {
-            statusTextView.setTextColor(Color.rgb(0, 0, 153));
+        if(getRealStatus( currentOffer.getState() ).equals(getString(R.string.reservation_close))) {
+            statusTextView.setTextColor(Color.rgb(255, 0, 0));
         }
 
     }
 
     String getRealStatus(int state) {
-        if(state == 0) return "Disponible";
-        if(state == 1) return "Reservado";
-        return "Finalizado";
+        if(state == 0) return getString(R.string.reservation_open);
+        if(state == 1) return getString(R.string.reservation_reserved);
+        return getString(R.string.reservation_close);
     }
 
     @Override

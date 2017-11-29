@@ -27,6 +27,8 @@
     <string name="sigin_google">INICIAR CON GOOGLE</string>
     <string name="not_account">¿No tienes cuenta? Resgistrate <u>acá</u>.</string>
 
+
+
     <!-- Strings related to register -->
     <string name="user_registration">Registro de usuarios</string>
     <string name="repeat_password">Repita su contraseña</string>
@@ -46,6 +48,11 @@
     <string name="photo">Foto</string>
     <string name="create_offer">Crear</string>
     <string name="pick_image_intent_text">Seleccionar Imagen</string>
+
+    <!-- States Reserve-->
+    <string name="reservation_open">Abierta</string>
+    <string name="reservation_reserved">Reservada</string>
+    <string name="reservation_close">Cerrada</string>
 
     <string-array name="states_list">
         <item>Todos</item>
