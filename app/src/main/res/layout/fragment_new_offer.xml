@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorLightBlue"
-    tools:context="co.edu.unal.bookswapp.NewOfferActivity">
+    android:background="@color/colorLightBlue">
 
     <ScrollView
         android:layout_width="match_parent"
