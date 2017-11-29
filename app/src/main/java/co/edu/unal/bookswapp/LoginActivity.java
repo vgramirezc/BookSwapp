@@ -97,6 +97,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void updateUI() {
         FirebaseUser user = mAuth.getCurrentUser();
         if(user != null) {
+            Log.i("registering", user.getEmail());
             finish();
             startActivity(new Intent(LoginActivity.this, DrawerActivity.class));
         }
@@ -229,8 +230,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         Profile newProfile = new Profile(user.getUid(), user.getEmail(), user.getDisplayName(), user.getPhoneNumber(), url);
         mProfileDatabaseReference.setValue(newProfile);
-
-        FirebaseDatabase.getInstance().getReference().child("email_registred").child(user.getEmail()).setValue(user.getUid());
+        String email_path = user.getEmail();
+        email_path = email_path.replace('.', '^');
+        Log.i("realcorreo", email_path);
+        FirebaseDatabase.getInstance().getReference().child("email_registred").child(email_path).setValue(user.getUid());
 
 
     }
