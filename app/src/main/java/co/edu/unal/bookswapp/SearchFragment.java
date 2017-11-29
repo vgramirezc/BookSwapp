@@ -1,6 +1,7 @@
 package co.edu.unal.bookswapp;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
@@ -145,7 +146,15 @@ public class SearchFragment extends Fragment implements RecyclerViewListener {
 
     @Override
     public void onItemClick(View v, int position) {
-        Toast.makeText( getActivity(), "Redireccionar a offer de " + mOffers.get( position ).getTitle(), Toast.LENGTH_SHORT ).show();
+        //Toast.makeText( getActivity(), "Redireccionar a offer de " + mOffers.get( position ).getTitle(), Toast.LENGTH_SHORT ).show();
+        String id = mOffers.get(position).getId();
+        Log.i("idOffer", mOffers.get(position).toString());
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        Bundle args = new Bundle();
+        args.putString("offer_id", id);
+        Fragment f = new OfferViewFragment();
+        f.setArguments(args);
+        fragmentTransaction.replace(R.id.main_content, f).addToBackStack(null).commit();
     }
 
     ///////////////////////////// CLASS METHODS /////////////////////////////////////////////////

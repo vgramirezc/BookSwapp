@@ -17,10 +17,10 @@
             android:layout_height="0dp"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="20dp"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
 
             android:layout_weight="90"
-            android:paddingBottom="10dp"
             app:cardCornerRadius="15dp">
 
             <LinearLayout
@@ -32,7 +32,8 @@
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:text="Alicia en el pais de las maravillas"
                     android:textAlignment="center"
@@ -41,7 +42,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -74,7 +76,8 @@
 
                 <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:paddingBottom="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -85,7 +88,6 @@
                             android:id="@+id/image_book"
                             android:layout_width="match_parent"
                             android:layout_height="250dp"
-                            android:layout_centerInParent="true"
                             android:layout_margin="20dp"
                             android:background="@drawable/background_border_image"
                             android:padding="5dp"
@@ -95,7 +97,8 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginStart="20dp"
                             android:layout_marginTop="0dp"
                             android:text="Descripcion:" />
 
@@ -104,7 +107,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
-                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginStart="20dp"
                             android:text="Las aventuras de Alicia en el país de las maravillas, comúnmente abreviado como Alicia en el país de las maravillas, es una novela de fantasía escrita por el matemático, lógico y escritor británico Charles Lutwidge Dodgson, bajo el seudónimo de Lewis Carroll, publicada en 1865. Cuenta cómo una niña llamada Alicia cae por un agujero, encontrándose en un mundo peculiar, poblado por humanos y criaturas antropomórficas. El libro juega con la lógica, dando a la novela gran popularidad tanto en niños como en adultos. Está considerada como una de las mejores novelas del género del Sinsentido. Su narrativa y estructura, junto con sus personajes, han sido una gran influencia tanto en la cultura popular como en la literatura, sobre todo en el género fantástico." />
                     </LinearLayout>
                 </ScrollView>
@@ -119,40 +123,35 @@
 
             <Button
                 android:id="@+id/reserve"
-                android:visibility="gone"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="43dp"
+                android:layout_marginStart="30dp"
                 android:text="Reservar" />
 
             <Button
                 android:id="@+id/cancel_reserve"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="43dp"
+                android:layout_marginStart="30dp"
                 android:text="Cancelar Reserva" />
 
             <Button
                 android:id="@+id/start_chat"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_alignParentTop="true"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="60dp"
+                android:layout_marginRight="30dp"
                 android:text="Iniciar Chat" />
 
             <Button
                 android:id="@+id/finish"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="60dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="30dp"
                 android:text="Finalizar" />
 
         </RelativeLayout>
