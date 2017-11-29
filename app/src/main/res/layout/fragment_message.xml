@@ -5,52 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayoutFirst"
-        android:textAlignment="center"
-        android:layout_centerHorizontal="true"
-        android:textSize="20dp"
-        android:text="Mensajes" />
-
-    <LinearLayout
-        android:layout_margin="20dp"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lv_message_frangment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:id="@+id/linearLayoutFirst">
-
-        <TextView
-            android:layout_margin="20dp"
-            android:text="Mensaje 1"
-            android:id="@+id/message1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_margin="20dp"
-            android:text="Mensaje 2"
-            android:id="@+id/message2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_margin="20dp"
-            android:text="Mensaje 3"
-            android:id="@+id/message3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_margin="20dp"
-            android:text="Mensaje 4"
-            android:id="@+id/message4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>
