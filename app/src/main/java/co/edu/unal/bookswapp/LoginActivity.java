@@ -227,10 +227,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String url = "";
         if(cur != null) url = cur.toString();
 
-        Profile xdlad = new Profile();
-        Profile newProfile = new Profile(user.getUid(), user.getEmail(), user.getDisplayName(),
-                "", user.getPhoneNumber(), "", 0, 0, 0, 0,
-                url);
+        Profile newProfile = new Profile(user.getUid(), user.getEmail(), user.getDisplayName(), user.getPhoneNumber(), url);
         mProfileDatabaseReference.setValue(newProfile);
     }
 }
