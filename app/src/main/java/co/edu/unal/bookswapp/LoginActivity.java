@@ -39,7 +39,7 @@ import com.shobhitpuri.custombuttons.GoogleSignInButton;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener  {
 
     private static final int RC_SIGN_IN = 1;
-    private FirebaseAuth auth;
+    private FirebaseAuth mAuth;
 
     private final String TAG = RegisterActivity.class.getSimpleName();
 
@@ -58,8 +58,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        auth = FirebaseAuth.getInstance();
+        
+        mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
         updateUI();
@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void updateUI() {
-        FirebaseUser user = auth.getCurrentUser();
+        FirebaseUser user = mAuth.getCurrentUser();
         if(user != null) {
             finish();
             startActivity(new Intent(LoginActivity.this, DrawerActivity.class));
@@ -142,14 +142,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        auth.signInWithCredential(credential)
+        mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = auth.getCurrentUser();
+                            Toast.makeText(LoginActivity.this, "Bienvenido", Toast.LENGTH_SHORT).show();
+                            mProfileDatabaseReference = mFirebaseDatabase.getReference().child("users").child(mAuth.getCurrentUser().getUid());
+                            mProfileDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if(!dataSnapshot.exists()){
+                                        Profile newProfile = new Profile(mAuth.getCurrentUser().getUid(),
+                                                mAuth.getCurrentUser().getEmail(),
+                                                mAuth.getCurrentUser().getDisplayName(),
+                                                "", 0, 0);
+                                        mProfileDatabaseReference.setValue(newProfile);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
                             updateUI();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -179,21 +196,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressDialog.setMessage("Ingresando...");
         progressDialog.show();
 
-        auth.signInWithEmailAndPassword(email, password)
+        mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
                         if(task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Bienvenido", Toast.LENGTH_SHORT).show();
-                            mProfileDatabaseReference = mFirebaseDatabase.getReference().child("users").child(auth.getCurrentUser().getUid());
+                            mProfileDatabaseReference = mFirebaseDatabase.getReference().child("users").child(mAuth.getCurrentUser().getUid());
                             mProfileDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if(!dataSnapshot.exists()){
-                                        Profile newProfile = new Profile(auth.getCurrentUser().getUid(),
-                                                auth.getCurrentUser().getEmail(),
-                                                auth.getCurrentUser().getDisplayName(),
+                                        Profile newProfile = new Profile(mAuth.getCurrentUser().getUid(),
+                                                mAuth.getCurrentUser().getEmail(),
+                                                mAuth.getCurrentUser().getDisplayName(),
                                                 "", 0, 0);
                                         mProfileDatabaseReference.setValue(newProfile);
                                     }

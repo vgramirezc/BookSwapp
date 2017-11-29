@@ -193,38 +193,6 @@ public class MyOfferFragment extends Fragment implements RecyclerViewListener {
         });
     }
 
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu, menu);
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        changeSearchViewTextColor(searchView);
-
-        searchView.setOnQueryTextListener(
-                new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        mCurQuery = query.toLowerCase();
-                        changeResultOffers( mCurQuery );
-                        return true;
-                    }
-                    @Override
-                    public boolean onQueryTextChange(String newText) {
-                        return false;
-                    }
-                }
-        );
-
-        return true;
-    }
-    * */
-
-
     @Override
     public void onItemClick(View v, int position) {
         //Toast.makeText( getActivity(), "Redireccionar a offer de " + mOffers.get( position ).getTitle(), Toast.LENGTH_SHORT ).show();
@@ -243,6 +211,8 @@ public class MyOfferFragment extends Fragment implements RecyclerViewListener {
     //////////////////////////// CLASS METHODS ////////////////////////////////////////////////////
     private void initRecyclerView(){
         LinearLayoutManager layoutManager = new LinearLayoutManager( getActivity() );
+        layoutManager.setReverseLayout( true );
+        layoutManager.setStackFromEnd( true );
         mRecyclerView.setLayoutManager( layoutManager );
         mOfferAdapter = new OfferAdapter( mOffers, this );
         mRecyclerView.setAdapter( mOfferAdapter );
@@ -266,12 +236,12 @@ public class MyOfferFragment extends Fragment implements RecyclerViewListener {
     private void changeResultOffers( final String query ){
         mOffers.clear();
         mOfferAdapter.notifyDataSetChanged();
-        Query offersQuery = mOffersDatabaseReference.orderByChild( "ownerId" ).equalTo( mCurUserId );
+        Query offersQuery = mOffersDatabaseReference.orderByChild( "timestamp" );
         offersQuery.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Offer resultOffer = dataSnapshot.getValue( Offer.class );
-                if( mStateToShow == -1 || mStateToShow == resultOffer.getState() ) {
+                if( mCurUserId.equals( resultOffer.getOwnerId() ) && (mStateToShow == -1 || mStateToShow == resultOffer.getState()) ) {
                     if (resultOffer.getTitle().toLowerCase().contains(query) || resultOffer.getAuthor().toLowerCase().contains(query)) {
                         mOffers.add(resultOffer);
                         mOfferAdapter.notifyDataSetChanged();
