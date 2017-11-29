@@ -15,8 +15,10 @@ public class Profile {
     double scoresCounter;
     int offersCounter;
     int interchangesCounter;
+    String urlImage;
 
-    public Profile(String id, String email, String name, String interests, String phone, String city, double score, double scoresCounter, int offersCounter, int interchangesCounter) {
+    public Profile(String id, String email, String name, String interests, String phone, String city, double score, double scoresCounter, int offersCounter, int interchangesCounter, String urlImage) {
+        if(name == null) name = "Nombre no disponible";
         this.id = id;
         this.email = email;
         this.name = name;
@@ -27,6 +29,7 @@ public class Profile {
         this.scoresCounter = scoresCounter;
         this.offersCounter = offersCounter;
         this.interchangesCounter = interchangesCounter;
+        this.urlImage = urlImage;
     }
 
     public Profile() {}
@@ -110,6 +113,11 @@ public class Profile {
     public void setInterchangesCounter(int interchangesCounter) {
         this.interchangesCounter = interchangesCounter;
     }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
 
     @Override
     public String toString() {
