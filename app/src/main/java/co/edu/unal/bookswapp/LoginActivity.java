@@ -156,7 +156,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if(!dataSnapshot.exists()){
+<<<<<<< HEAD
+                                        Profile newProfile = new Profile(mAuth.getCurrentUser().getUid(),
+                                                mAuth.getCurrentUser().getEmail(),
+                                                mAuth.getCurrentUser().getDisplayName());
+                                        mProfileDatabaseReference.setValue(newProfile);
+=======
                                         insertProfileInDatabase();
+>>>>>>> d8b5666786ea4d602195a95c3dfbf7df754703c3
                                     }
                                 }
 
@@ -205,7 +212,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if(!dataSnapshot.exists()){
+<<<<<<< HEAD
+                                        Profile newProfile = new Profile(mAuth.getCurrentUser().getUid(),
+                                                mAuth.getCurrentUser().getEmail(),
+                                                mAuth.getCurrentUser().getDisplayName());
+                                        mProfileDatabaseReference.setValue(newProfile);
+=======
                                         insertProfileInDatabase();
+>>>>>>> d8b5666786ea4d602195a95c3dfbf7df754703c3
                                     }
                                 }
 
