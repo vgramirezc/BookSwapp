@@ -54,6 +54,11 @@
     <string name="reservation_reserved">Reservada</string>
     <string name="reservation_close">Cerrada</string>
 
+    <string name="all_offers">Todas</string>
+    <string name="open_offers">Abiertas</string>
+    <string name="reserved_offers">Reservadas</string>
+    <string name="closed_offers">Cerradas</string>
+
     <string-array name="states_list">
         <item>Todos</item>
         <item>Abiertos</item>
