@@ -109,7 +109,7 @@ public class ProfileFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
-        saveButton = (Button) view.findViewById(R.id.editButton);
+        /*saveButton = (Button) view.findViewById(R.id.editButton);
         user = (TextView) view.findViewById(R.id.user);
         name = (EditText) view.findViewById(R.id.name);
         interests = (EditText) view.findViewById(R.id.interests);
@@ -153,7 +153,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        progressDialog = new ProgressDialog(view.getContext());
+        progressDialog = new ProgressDialog(view.getContext());*/
     }
 
     @Override
