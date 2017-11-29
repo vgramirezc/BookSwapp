@@ -9,20 +9,27 @@ public class Profile {
     String email;
     String name;
     String interests;
+    String phone;
+    String city;
     double score;
-    double numberscores;
+    double scoresCounter;
+    int offersCounter;
+    int interchangesCounter;
 
-    public Profile() {
-    }
-
-    public Profile(String id, String email, String name, String interests, double score, double numberscores) {
+    public Profile(String id, String email, String name, String interests, String phone, String city, double score, double scoresCounter, int offersCounter, int interchangesCounter) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.interests = interests;
+        this.phone = phone;
+        this.city = city;
         this.score = score;
-        this.numberscores = numberscores;
+        this.scoresCounter = scoresCounter;
+        this.offersCounter = offersCounter;
+        this.interchangesCounter = interchangesCounter;
     }
+
+    public Profile() {}
 
     public String getId() {
         return id;
@@ -64,12 +71,44 @@ public class Profile {
         this.score = score;
     }
 
-    public double getNumberscores() {
-        return numberscores;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setNumberscores(double numberscores) {
-        this.numberscores = numberscores;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public double getScoresCounter() {
+        return scoresCounter;
+    }
+
+    public void setScoresCounter(double scoresCounter) {
+        this.scoresCounter = scoresCounter;
+    }
+
+    public int getOffersCounter() {
+        return offersCounter;
+    }
+
+    public void setOffersCounter(int offersCounter) {
+        this.offersCounter = offersCounter;
+    }
+
+    public int getInterchangesCounter() {
+        return interchangesCounter;
+    }
+
+    public void setInterchangesCounter(int interchangesCounter) {
+        this.interchangesCounter = interchangesCounter;
     }
 
     @Override
@@ -79,8 +118,13 @@ public class Profile {
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", interests='" + interests + '\'' +
+                ", phone='" + phone + '\'' +
+                ", city='" + city + '\'' +
                 ", score=" + score +
-                ", numberscores=" + numberscores +
+                ", scoresCounter=" + scoresCounter +
+                ", offersCounter=" + offersCounter +
+                ", interchangesCounter=" + interchangesCounter +
                 '}';
     }
+
 }
