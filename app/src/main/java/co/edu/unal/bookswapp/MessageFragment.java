@@ -138,7 +138,7 @@ public class MessageFragment extends Fragment implements RecyclerViewListener {
 
     @Override
     public void onItemClick(View v, int position) {
-        Toast.makeText( getActivity(), "Chat con usuario " + mUsers.get( position ).getUser(), Toast.LENGTH_SHORT ).show();
+        //Toast.makeText( getActivity(), "Chat con usuario " + mUsers.get( position ).getUser(), Toast.LENGTH_SHORT ).show();
         Log.i("Perro", mFirebaseAuth.getCurrentUser().getUid());
         Log.i("Perro2", mUsers.get( position ).getUserId());
         mChatOfDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid()).child( mUsers.get( position ).getUserId() )

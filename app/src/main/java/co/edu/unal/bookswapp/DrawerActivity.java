@@ -80,6 +80,12 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         //replaceFragment( new ChatFragment() );
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
     public void replaceFragment(Fragment f) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_content, f).addToBackStack(null).commit();

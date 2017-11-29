@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -70,6 +71,7 @@ public class OfferViewFragment extends Fragment {
     private Button cancelReserveButton;
     private Button startChatButton;
     private Button finishButton;
+    private Profile profile;
 
     public OfferViewFragment() {
         // Required empty public constructor
@@ -169,10 +171,29 @@ public class OfferViewFragment extends Fragment {
                         .setPositiveButton("Reservar", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 String email = txtUrl.getText().toString();
-                                mOffersDatabaseReference.child(offerId).child("state").setValue(1);
-                                mOffersDatabaseReference.child(offerId).child("userReservedId").setValue(email);
+                                email = email.replace('.', '^');
+                                Log.i("Data", email.toString());
+                                Log.i("Data", "ivancastel94@gmail^com");
+                                FirebaseDatabase.getInstance().getReference().child("email_registred").child(email.toString())
+                                .addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        Log.i("Data", dataSnapshot.toString());
 
-                                //TODO instead of email, get the id querying the bd
+                                        if(dataSnapshot.getValue() == null) {
+                                            Toast.makeText(getActivity(), "Este usuario no existe", Toast.LENGTH_SHORT).show();
+                                            return;
+                                        } else {
+                                            String userId = dataSnapshot.getValue(String.class);
+                                            mOffersDatabaseReference.child(offerId).child("state").setValue(1);
+                                            mOffersDatabaseReference.child(offerId).child("userReservedId").setValue(userId);
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
                             }
                         })
                         .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -245,6 +266,25 @@ public class OfferViewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mOffersDatabaseReference.child(offerId).child("state").setValue(2);
+
+                FirebaseDatabase.getInstance().getReference().child("users").child(profile.getId()).child("interchangesCounter")
+                        .setValue( profile.getInterchangesCounter()+1 );
+
+                FirebaseDatabase.getInstance().getReference().child("users").child( currentOffer.getUserReservedId() )
+                        .addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                Profile p = dataSnapshot.getValue(Profile.class);
+                                FirebaseDatabase.getInstance().getReference().child("users").child(p.getId()).child("interchangesCounter")
+                                        .setValue( p.getInterchangesCounter()+1 );
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
             }
         });
 
@@ -259,6 +299,19 @@ public class OfferViewFragment extends Fragment {
                 fragmentTransaction.replace(R.id.main_content, f).addToBackStack(null).commit();
             }
         });
+
+        FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        profile = dataSnapshot.getValue(Profile.class);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
     }
 
 

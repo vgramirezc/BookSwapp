@@ -26,9 +26,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -130,6 +133,8 @@ public class NewOfferFragment extends Fragment {
         ( (DrawerActivity) getActivity() ).mToolbar.setTitle( R.string.new_offer );
     }
 
+    Profile profile;
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -182,17 +187,20 @@ public class NewOfferFragment extends Fragment {
                 else if( mPhotoUri == null ){
                     showToast( "Debe subir una imagen del libro" );
                 }
-                else{
-
+                else {
                     String id = mOffersDatabaseReference.push().getKey();
                     Log.i("real_id", id);
-                    Offer newOffer = new Offer(id, mFirebaseAuth.getCurrentUser().getDisplayName(),
+                    Offer newOffer = new Offer(id, mFirebaseAuth.getCurrentUser().getEmail(),
                             mFirebaseAuth.getCurrentUser().getUid(),
                             mTitleEditText.getText().toString().trim(),
                             mAuthorEditText.getText().toString().trim(),
                             mDescriptionEditText.getText().toString().trim(),
                             mPhotoUri.toString(), 0, null, ServerValue.TIMESTAMP);
                     mOffersDatabaseReference.child(id).setValue(newOffer);
+
+                    FirebaseDatabase.getInstance().getReference().child("users").child(profile.getId()).child("offersCounter")
+                            .setValue( profile.getOffersCounter()+1 );
+
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     Bundle args = new Bundle();
                     args.putString("offer_id", id);
@@ -202,7 +210,22 @@ public class NewOfferFragment extends Fragment {
                 }
             }
         });
+
+        FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseAuth.getCurrentUser().getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        profile = dataSnapshot.getValue(Profile.class);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
