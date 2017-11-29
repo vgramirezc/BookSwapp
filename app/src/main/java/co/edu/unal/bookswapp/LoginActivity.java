@@ -157,8 +157,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     if(!dataSnapshot.exists()){
                                         Profile newProfile = new Profile(mAuth.getCurrentUser().getUid(),
                                                 mAuth.getCurrentUser().getEmail(),
-                                                mAuth.getCurrentUser().getDisplayName(),
-                                                "", 0, 0);
+                                                mAuth.getCurrentUser().getDisplayName());
                                         mProfileDatabaseReference.setValue(newProfile);
                                     }
                                 }
@@ -210,8 +209,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     if(!dataSnapshot.exists()){
                                         Profile newProfile = new Profile(mAuth.getCurrentUser().getUid(),
                                                 mAuth.getCurrentUser().getEmail(),
-                                                mAuth.getCurrentUser().getDisplayName(),
-                                                "", 0, 0);
+                                                mAuth.getCurrentUser().getDisplayName());
                                         mProfileDatabaseReference.setValue(newProfile);
                                     }
                                 }
