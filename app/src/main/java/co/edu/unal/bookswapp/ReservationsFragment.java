@@ -1,27 +1,28 @@
 package co.edu.unal.bookswapp;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.google.firebase.auth.FirebaseAuth;
-
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MessageFragment.OnFragmentInteractionListener} interface
+ * {@link ReservationsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MessageFragment#newInstance} factory method to
+ * Use the {@link ReservationsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MessageFragment extends Fragment {
+public class ReservationsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -33,14 +34,7 @@ public class MessageFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private FirebaseAuth auth;
-
-    private final String TAG = RegisterActivity.class.getSimpleName();
-
-    //private Button logOutButton;
-    private ProgressDialog progressDialog;
-
-    public MessageFragment() {
+    public ReservationsFragment() {
         // Required empty public constructor
     }
 
@@ -50,11 +44,11 @@ public class MessageFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MessageFragment.
+     * @return A new instance of fragment ReservationsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MessageFragment newInstance(String param1, String param2) {
-        MessageFragment fragment = new MessageFragment();
+    public static ReservationsFragment newInstance(String param1, String param2) {
+        ReservationsFragment fragment = new ReservationsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -69,22 +63,52 @@ public class MessageFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        setHasOptionsMenu( true );
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        auth = FirebaseAuth.getInstance();
-
-        progressDialog = new ProgressDialog(view.getContext());
+    public void onResume() {
+        super.onResume();
+        ( (DrawerActivity) getActivity() ).mToolbar.setTitle( R.string.reservations );
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_message, container, false);
+        return inflater.inflate(R.layout.fragment_reservations, container, false);
     }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Toolbar toolbar = ( (DrawerActivity) getActivity() ).mToolbar;
+
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText( R.string.reservation_not_closed ));
+        tabLayout.addTab(tabLayout.newTab().setText( R.string.reservation_closed ));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        final ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
+        final ReservationsPagerAdapter adapter = new ReservationsPagerAdapter(((DrawerActivity) getActivity()).getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(
+                new TabLayout.OnTabSelectedListener() {
+                    @Override
+                    public void onTabSelected(TabLayout.Tab tab) {
+                        viewPager.setCurrentItem(tab.getPosition());
+                    }
+                    @Override
+                    public void onTabUnselected(TabLayout.Tab tab) {
+                    }
+                    @Override
+                    public void onTabReselected(TabLayout.Tab tab) {
+                    }
+                }
+        );
+    }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

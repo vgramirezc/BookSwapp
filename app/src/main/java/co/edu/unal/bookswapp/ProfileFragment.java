@@ -4,14 +4,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,11 +49,13 @@ public class ProfileFragment extends Fragment {
 
     private final String TAG = RegisterActivity.class.getSimpleName();
 
-    private Button editButton;
+    private Button saveButton;
     private TextView user;
-    private TextView name;
-    private TextView interests;
+    private EditText name;
+    private EditText interests;
     private TextView score;
+    private double numscores, denscores;
+
     private ProgressDialog progressDialog;
 
     public ProfileFragment() {
@@ -106,10 +109,10 @@ public class ProfileFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
-        /*editButton = (Button) view.findViewById(R.id.editButton);
+        /*saveButton = (Button) view.findViewById(R.id.editButton);
         user = (TextView) view.findViewById(R.id.user);
-        name = (TextView) view.findViewById(R.id.name);
-        interests = (TextView) view.findViewById(R.id.interests);
+        name = (EditText) view.findViewById(R.id.name);
+        interests = (EditText) view.findViewById(R.id.interests);
         score = (TextView) view.findViewById(R.id.score);
 
         mProfileDatabaseReference = mFirebaseDatabase.getReference().child("users").child(auth.getCurrentUser().getUid());
@@ -121,7 +124,9 @@ public class ProfileFragment extends Fragment {
                 name.setText(perfil.getName());
                 interests.setText(perfil.getInterests());
                 if(perfil.getNumberscores()>0){
-                    double puntaje = perfil.getScore()/perfil.getNumberscores();
+                    numscores = perfil.getScore();
+                    denscores = perfil.getNumberscores();
+                    double puntaje = numscores/denscores;
                     score.setText(Double.toString(puntaje));
                 }else{
                     score.setText("No tiene calificación todavía");
@@ -133,10 +138,18 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        editButton.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Profile perfil = new Profile(
+                        auth.getCurrentUser().getUid(),
+                        user.getText().toString(),
+                        name.getText().toString(),
+                        interests.getText().toString(),
+                        numscores,
+                        denscores
+                );
+                mProfileDatabaseReference.setValue(perfil);
             }
         });
 
