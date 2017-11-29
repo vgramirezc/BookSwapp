@@ -1,6 +1,8 @@
 package co.edu.unal.bookswapp;
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by vr on 11/25/17.
@@ -11,7 +13,8 @@ import android.net.Uri;
 //1 -> Reserved
 //2 -> Closed
 
-public class Offer {
+public class Offer{
+    private String id;
     private String ownerName;
     private String ownerId;
     private String title;
@@ -24,7 +27,8 @@ public class Offer {
 
     public Offer(){}
 
-    public Offer(String ownerName, String ownerId, String title, String author, String description, String photoUrl, int state, String userReservedId, Object timestamp) {
+    public Offer(String id, String ownerName, String ownerId, String title, String author, String description, String photoUrl, int state, String userReservedId, Object timestamp) {
+        this.id = id;
         this.ownerName = ownerName;
         this.ownerId = ownerId;
         this.title = title;
@@ -35,6 +39,8 @@ public class Offer {
         this.userReservedId = userReservedId;
         this.timestamp = timestamp;
     }
+
+
 
     public String getOwnerName() {
         return ownerName;
@@ -104,9 +110,18 @@ public class Offer {
 
     public void setTimestamp(long timestamp){ this.timestamp = timestamp; }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Offer{" +
+                "id='" + id + '\'' +
                 "ownerName='" + ownerName + '\'' +
                 ", ownerId='" + ownerId + '\'' +
                 ", title='" + title + '\'' +
@@ -117,4 +132,5 @@ public class Offer {
                 ", userReservedId='" + userReservedId + '\'' +
                 '}';
     }
+
 }

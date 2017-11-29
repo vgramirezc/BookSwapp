@@ -14,6 +14,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -194,7 +195,17 @@ public class MyOfferFragment extends Fragment implements RecyclerViewListener {
 
     @Override
     public void onItemClick(View v, int position) {
-        Toast.makeText( getActivity(), "Redireccionar a offer de " + mOffers.get( position ).getTitle(), Toast.LENGTH_SHORT ).show();
+        //Toast.makeText( getActivity(), "Redireccionar a offer de " + mOffers.get( position ).getTitle(), Toast.LENGTH_SHORT ).show();
+
+        String id = mOffers.get(position).getId();
+        Log.i("idOffer", mOffers.get(position).toString());
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        Bundle args = new Bundle();
+        args.putString("offer_id", id);
+        Fragment f = new OfferViewFragment();
+        f.setArguments(args);
+        fragmentTransaction.replace(R.id.main_content, f).addToBackStack(null).commit();
+
     }
 
     //////////////////////////// CLASS METHODS ////////////////////////////////////////////////////
