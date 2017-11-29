@@ -76,8 +76,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //replaceFragment( new SearchFragment() );
-        replaceFragment( new ChatFragment() );
+        replaceFragment( new SearchFragment() );
     }
 
     public void replaceFragment(Fragment f) {

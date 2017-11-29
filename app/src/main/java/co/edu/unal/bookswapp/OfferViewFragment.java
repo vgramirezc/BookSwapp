@@ -200,18 +200,27 @@ public class OfferViewFragment extends Fragment {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 String chatId;
-                                Log.i("chat_id", dataSnapshot.toString());
+
                                 if(dataSnapshot.getValue() == null) {
                                     chatId = FirebaseDatabase.getInstance().getReference()
                                             .child("chats_of").child(currentOffer.getOwnerId())
                                             .child(meId).push().getKey();
+
+                                    FirebaseDatabase.getInstance().getReference()
+                                            .child("chats_of").child(currentOffer.getOwnerId())
+                                            .child(meId).setValue(chatId);
+
                                     FirebaseDatabase.getInstance().getReference()
                                             .child("chats_of").child(meId).
                                             child(currentOffer.getOwnerId())
                                             .setValue(chatId);
+                                    Log.i("chat_idMe", meId);
+                                    Log.i("chat_idOtro", currentOffer.getOwnerId());
+                                    return;
                                 } else {
                                     chatId = dataSnapshot.getValue(String.class);
                                 }
+                                Log.i("Entre", "entre");
 
                                 // TODO es necesario remover el listener?
                                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();

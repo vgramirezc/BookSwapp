@@ -67,7 +67,7 @@ public class ChatFragment extends Fragment {
     private EditText mMessageEditText;
     private Button mSendButton;
 
-    private String chatId = "chat1";
+    private String chatId;
     private String mUsername;
 
     private FirebaseDatabase mFireBaseDatabase;
