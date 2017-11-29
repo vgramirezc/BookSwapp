@@ -2,10 +2,14 @@ package co.edu.unal.bookswapp;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,11 +17,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -40,18 +50,22 @@ public class EditProfileFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private FirebaseAuth auth;
+    private FirebaseAuth mAuth;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mProfileDatabaseReference;
 
     private final String TAG = RegisterActivity.class.getSimpleName();
 
+    private EditText nameEditText;
+    private ImageView profileImageView;
+    private TextView ratingTextView;
+    private TextView offersTextView;
+    private TextView interchangeTextView;
+    private TextView emailTextView;
+    private EditText phoneEditText;
+    private EditText cityEditText;
     private Button saveButton;
-    private TextView user;
-    private EditText name;
-    private EditText interests;
-    private TextView score;
-    private double numscores, denscores;
+    private Profile perfil;
 
     private ProgressDialog progressDialog;
 
@@ -103,31 +117,51 @@ public class EditProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        auth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
-        /*saveButton = (Button) view.findViewById(R.id.editButton);
-        user = (TextView) view.findViewById(R.id.user);
-        name = (EditText) view.findViewById(R.id.name);
-        interests = (EditText) view.findViewById(R.id.interests);
-        score = (TextView) view.findViewById(R.id.score);
+        profileImageView = (ImageView) view.findViewById(R.id.profile_image);
+        nameEditText = (EditText) view.findViewById(R.id.edit_name);
+        offersTextView = (TextView) view.findViewById(R.id.offers_count);
+        interchangeTextView = (TextView) view.findViewById(R.id.interchange_count);
+        ratingTextView = (TextView) view.findViewById(R.id.rating_count);
+        emailTextView = (TextView) view.findViewById(R.id.email_profile);
+        phoneEditText = (EditText) view.findViewById(R.id.edit_phone_profile);
+        cityEditText = (EditText) view.findViewById(R.id.edit_city_profile);
 
-        mProfileDatabaseReference = mFirebaseDatabase.getReference().child("users").child(auth.getCurrentUser().getUid());
-        mProfileDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        saveButton = (Button) view.findViewById(R.id.button_save);
+
+
+        mProfileDatabaseReference = mFirebaseDatabase.getReference().child("users").child(mAuth.getCurrentUser().getUid());
+        mProfileDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Profile perfil = dataSnapshot.getValue(Profile.class);
-                user.setText(perfil.getEmail());
-                name.setText(perfil.getName());
-                interests.setText(perfil.getInterests());
-                if(perfil.getNumberscores()>0){
-                    numscores = perfil.getScore();
-                    denscores = perfil.getNumberscores();
-                    double puntaje = numscores/denscores;
-                    score.setText(Double.toString(puntaje));
-                }else{
-                    score.setText("No tiene calificación todavía");
+                perfil = dataSnapshot.getValue(Profile.class);
+                nameEditText.setText(perfil.getName());
+                offersTextView.setText(""+perfil.getOffersCounter());
+                interchangeTextView.setText(""+perfil.getInterchangesCounter());
+                if(perfil.getScoresCounter() > 0)
+                    ratingTextView.setText(""+ (int)(perfil.getScore() / perfil.getScoresCounter()) );
+                else
+                    ratingTextView.setText("--");
+                emailTextView.setText(perfil.getEmail());
+                phoneEditText.setText("+"+perfil.getPhone());
+                cityEditText.setText(perfil.getCity());
+
+                if(!perfil.getUrlImage().equals("")) {
+                    Glide.with(profileImageView.getContext())
+                            .load(perfil.getUrlImage()).
+                            asBitmap().centerCrop().into(new BitmapImageViewTarget(profileImageView) {
+                        @Override
+                        protected void setResource(Bitmap resource) {
+                            RoundedBitmapDrawable circularBitmapDrawable =
+                                    RoundedBitmapDrawableFactory.create(profileImageView.getContext().getResources(), resource);
+                            circularBitmapDrawable.setCircular(true);
+                            profileImageView.setImageDrawable(circularBitmapDrawable);
+                        }
+                    });
                 }
+
             }
 
             @Override
@@ -138,26 +172,31 @@ public class EditProfileFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Profile perfil = new Profile(
-                        auth.getCurrentUser().getUid(),
-                        user.getText().toString(),
-                        name.getText().toString(),
-                        interests.getText().toString(),
-                        numscores,
-                        denscores
-                );
+                String name = nameEditText.getText().toString();
+                if(name.length()>0) perfil.setName(name);
+                else perfil.setName("Nombre no disponible");
+                String phone = phoneEditText.getText().toString();
+                if(phone.length()>0) perfil.setPhone(phone);
+                else perfil.setPhone("Telefono no disponible");
+                String ciudad = cityEditText.getText().toString();
+                if(ciudad.length()>0) perfil.setCity(ciudad);
+                else perfil.setCity("Ciudad no disponible");
                 mProfileDatabaseReference.setValue(perfil);
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                Bundle args = new Bundle();
+                args.putString("profile_id", mAuth.getCurrentUser().getUid());
+                Fragment f = new ProfileFragment();
+                f.setArguments(args);
+                fragmentTransaction.replace(R.id.main_content, f).addToBackStack(null).commit();
             }
         });
-
-        progressDialog = new ProgressDialog(view.getContext());*/
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_edit_profile, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
