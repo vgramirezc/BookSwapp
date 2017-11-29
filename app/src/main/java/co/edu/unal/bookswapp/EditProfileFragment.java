@@ -2,6 +2,7 @@ package co.edu.unal.bookswapp;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,12 +23,21 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -50,9 +60,13 @@ public class EditProfileFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    private static final int PICK_IMAGE_ID = 1;
+
     private FirebaseAuth mAuth;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mProfileDatabaseReference;
+    private DatabaseReference mUserPhotosDatabaseReference;
+    private StorageReference mUserPhotosStorageReference;
 
     private final String TAG = RegisterActivity.class.getSimpleName();
 
@@ -66,6 +80,8 @@ public class EditProfileFragment extends Fragment {
     private EditText cityEditText;
     private Button saveButton;
     private Profile perfil;
+    private Uri mSelectedImageUri;
+    private Uri mPhotoUri;
 
     private ProgressDialog progressDialog;
 
@@ -119,6 +135,8 @@ public class EditProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mUserPhotosStorageReference = FirebaseStorage.getInstance().getReference().child("photos").child( mAuth.getCurrentUser().getUid() );
+        mUserPhotosDatabaseReference = mFirebaseDatabase.getReference().child( "photos" ).child( mAuth.getCurrentUser().getUid() );
 
         profileImageView = (ImageView) view.findViewById(R.id.profile_image);
         nameEditText = (EditText) view.findViewById(R.id.edit_name);
@@ -131,6 +149,12 @@ public class EditProfileFragment extends Fragment {
 
         saveButton = (Button) view.findViewById(R.id.button_save);
 
+        profileImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectImage();
+            }
+        });
 
         mProfileDatabaseReference = mFirebaseDatabase.getReference().child("users").child(mAuth.getCurrentUser().getUid());
         mProfileDatabaseReference.addValueEventListener(new ValueEventListener() {
@@ -182,6 +206,8 @@ public class EditProfileFragment extends Fragment {
                 if(ciudad.length()>0) perfil.setCity(ciudad);
                 else perfil.setCity("Ciudad no disponible");
                 mProfileDatabaseReference.setValue(perfil);
+                if(mPhotoUri != null && !mPhotoUri.equals(""))
+                    mProfileDatabaseReference.child("urlImage").setValue( mPhotoUri.toString() );
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 Bundle args = new Bundle();
                 args.putString("profile_id", mAuth.getCurrentUser().getUid());
@@ -204,6 +230,36 @@ public class EditProfileFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if( requestCode == PICK_IMAGE_ID && resultCode == RESULT_OK ){
+
+            File imageFile = ImagePicker.getTempFile(getActivity());
+            boolean isCamera = (data == null || data.getData() == null  || data.getData().toString().contains(imageFile.toString()));
+            if (isCamera) mSelectedImageUri = Uri.fromFile(imageFile);
+            else mSelectedImageUri = data.getData();
+
+            String photoKey = mUserPhotosDatabaseReference.push().getKey();
+            StorageReference photoRef = mUserPhotosStorageReference.child( photoKey );
+            photoRef.putFile( mSelectedImageUri )
+                    .addOnSuccessListener(getActivity(), new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            mPhotoUri = taskSnapshot.getDownloadUrl();
+                            Glide.with(profileImageView.getContext())
+                                    .load(mPhotoUri)
+                                    .into(profileImageView);
+                        }
+                    });
+        }
+    }
+
+    private void selectImage(){
+        Intent chooseImageIntent = ImagePicker.getPickImageIntent( getActivity() );
+        startActivityForResult(chooseImageIntent, PICK_IMAGE_ID);
     }
 
     @Override

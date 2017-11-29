@@ -30,7 +30,7 @@
                         android:layout_height="150dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="45dp"
-                        android:src="@drawable/logo" />
+                        android:src="@drawable/ic_profile" />
 
                     <EditText
                         android:id="@+id/edit_name"
