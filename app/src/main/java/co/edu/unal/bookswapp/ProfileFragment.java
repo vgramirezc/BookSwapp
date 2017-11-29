@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
@@ -152,7 +153,7 @@ public class ProfileFragment extends Fragment {
                 if(p.getScoresCounter() > 0)
                     ratingTextView.setText(""+ (int)(p.getScore() / p.getScoresCounter()) );
                 else
-                    ratingTextView.setText("0");
+                    ratingTextView.setText("--");
                 emailTextView.setText(p.getEmail());
                 phoneTextView.setText("+"+p.getPhone());
                 cityTextView.setText(p.getCity());
@@ -181,7 +182,10 @@ public class ProfileFragment extends Fragment {
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            // TODO abrir nuevo fragmento de editar
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            Bundle args = new Bundle();
+            Fragment f = new EditProfileFragment();
+            fragmentTransaction.replace(R.id.main_content, f).addToBackStack(null).commit();
             }
         });
 

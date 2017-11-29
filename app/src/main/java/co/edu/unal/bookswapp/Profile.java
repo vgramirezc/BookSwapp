@@ -17,28 +17,29 @@ public class Profile {
     int interchangesCounter;
     String urlImage;
 
-    public Profile(String id, String email, String name){
-        if(name == null) name = "Nombre no disponible";
-        if(phone == null) phone = "Telefono no disponible";
-        if(city.equals("")) city = "Ciudad no disponible";
+    public Profile(String id, String email, String name, String phone, String urlImage){
+        if(name == null || name.length()==0) name = "Nombre no disponible";
+        if(phone == null || phone.length()==0) phone = "Telefono no disponible";
         this.id = id;
         this.email = email;
         this.name = name;
         this.interests = "";
-        this.phone = "";
-        this.city = "";
+        this.phone = phone;
+        this.city = "Ciudad no disponible";
         this.score = 0;
         this.scoresCounter = 0;
         this.offersCounter = 0;
         this.interchangesCounter = 0;
-        this.urlImage = "";
+        this.urlImage = urlImage;
     }
 
     public Profile(String id, String email, String name, String interests, String phone, String city, double score, double scoresCounter, int offersCounter, int interchangesCounter, String urlImage) {
+        if(name == null || name.length()==0) name = "Nombre no disponible";
+        if(phone == null || phone.length()==0) phone = "Telefono no disponible";
+        if(city == null || city.length()==0) city = "Ciudad no disponible";
         this.id = id;
         this.email = email;
         this.name = name;
-        if(this.name == null || this.name.length()==0) this.name = "Nombre no disponible";
         this.interests = interests;
         this.phone = phone;
         this.city = city;
