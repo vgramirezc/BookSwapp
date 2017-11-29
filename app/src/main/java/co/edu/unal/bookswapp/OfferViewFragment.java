@@ -12,6 +12,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -97,8 +99,17 @@ public class OfferViewFragment extends Fragment {
         if (getArguments() != null) {
             offerId = getArguments().getString("offer_id");
         }
+        setHasOptionsMenu( true );
     }
 
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem mSearchMenuItem = menu.findItem(R.id.action_search);
+        mSearchMenuItem.setVisible( false );
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         ( (DrawerActivity) getActivity() ).mToolbar.setTitle( "" );

@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,10 @@ public class ReservationsFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private ViewPager mViewPager;
+    private ReservationsPagerAdapter mAdapter;
+    private TabLayout mTabLayout;
 
     public ReservationsFragment() {
         // Required empty public constructor
@@ -70,6 +75,23 @@ public class ReservationsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         ( (DrawerActivity) getActivity() ).mToolbar.setTitle( R.string.reservations );
+        mAdapter = new ReservationsPagerAdapter(((DrawerActivity) getActivity()).getSupportFragmentManager(), mTabLayout.getTabCount());
+        mViewPager.setAdapter(mAdapter);
+        //mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        mTabLayout.addOnTabSelectedListener(
+                new TabLayout.OnTabSelectedListener() {
+                    @Override
+                    public void onTabSelected(TabLayout.Tab tab) {
+                        mViewPager.setCurrentItem(tab.getPosition());
+                    }
+                    @Override
+                    public void onTabUnselected(TabLayout.Tab tab) {
+                    }
+                    @Override
+                    public void onTabReselected(TabLayout.Tab tab) {
+                    }
+                }
+        );
     }
 
     @Override
@@ -83,20 +105,20 @@ public class ReservationsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Toolbar toolbar = ( (DrawerActivity) getActivity() ).mToolbar;
 
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText( R.string.reservation_not_closed ));
-        tabLayout.addTab(tabLayout.newTab().setText( R.string.reservation_closed ));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        mTabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
+        mTabLayout.addTab(mTabLayout.newTab().setText( R.string.reservation_not_closed ));
+        mTabLayout.addTab(mTabLayout.newTab().setText( R.string.reservation_closed ));
+        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
-        final ReservationsPagerAdapter adapter = new ReservationsPagerAdapter(((DrawerActivity) getActivity()).getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(
+        mViewPager = (ViewPager) view.findViewById(R.id.pager);
+        mAdapter = new ReservationsPagerAdapter(((DrawerActivity) getActivity()).getSupportFragmentManager(), mTabLayout.getTabCount());
+        mViewPager.setAdapter(mAdapter);
+        //mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        mTabLayout.addOnTabSelectedListener(
                 new TabLayout.OnTabSelectedListener() {
                     @Override
                     public void onTabSelected(TabLayout.Tab tab) {
-                        viewPager.setCurrentItem(tab.getPosition());
+                        mViewPager.setCurrentItem(tab.getPosition());
                     }
                     @Override
                     public void onTabUnselected(TabLayout.Tab tab) {
