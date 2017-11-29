@@ -1,13 +1,13 @@
 package co.edu.unal.bookswapp;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
@@ -80,7 +80,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     }
 
     public void replaceFragment(Fragment f) {
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_content, f).addToBackStack(null).commit();
     }
 
@@ -98,7 +98,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            FragmentManager fg = getFragmentManager();
+            FragmentManager fg = getSupportFragmentManager();
             Log.i("stack fragment", fg.getBackStackEntryCount() + "");
             if (fg.getBackStackEntryCount() != 0) {
                 fg.popBackStackImmediate();
@@ -134,6 +134,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                             updateUI();
                         }
                     });
+        } else if (id == R.id.reservations){
+            replaceFragment( new ReservationsFragment() );
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

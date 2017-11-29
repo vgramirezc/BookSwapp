@@ -22,6 +22,10 @@
             android:id="@+id/messages"
             android:icon="@drawable/ic_messages"
             android:title="@string/messages" />
+        <item
+            android:id="@+id/reservations"
+            android:icon="@drawable/ic_reservation"
+            android:title="@string/reservations" />
     </group>
 
     <item android:title="Administrar Cuenta">

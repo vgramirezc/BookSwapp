@@ -28,7 +28,6 @@
     <string name="not_account">¿No tienes cuenta? Resgistrate <u>acá</u>.</string>
 
 
-
     <!-- Strings related to register -->
     <string name="user_registration">Registro de usuarios</string>
     <string name="repeat_password">Repita su contraseña</string>
@@ -40,6 +39,7 @@
     <string name="new_offer">Nueva Oferta</string>
     <string name="my_offers">Mis Ofertas</string>
     <string name="messages">Mensajes</string>
+    <string name="reservations">Mis Reservas</string>
     <string name="log_out">Cerrar Sesion</string>
 
     <string name="title">Título del libro</string>
@@ -70,6 +70,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="reservation_not_closed">Sin cerrar</string>
+    <string name="reservation_closed">Cerradas</string>
 
 
 </resources>

@@ -1,7 +1,7 @@
 package co.edu.unal.bookswapp;
 
+
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,27 +37,18 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MyOfferFragment.OnFragmentInteractionListener} interface
+ * {@link ReservationsNotClosedTab.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MyOfferFragment#newInstance} factory method to
+ * Use the {@link ReservationsNotClosedTab#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyOfferFragment extends Fragment implements RecyclerViewListener {
+public class ReservationsNotClosedTab extends Fragment implements RecyclerViewListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
-    //UI variables
-    private Spinner mSpinner;
     private RecyclerView mRecyclerView;
-    private FloatingActionButton mFloatingActionButton;
 
     //Firebase variables
     private FirebaseAuth mFirebaseAuth;
@@ -70,10 +59,16 @@ public class MyOfferFragment extends Fragment implements RecyclerViewListener {
     private OfferAdapter mOfferAdapter;
     private ArrayList<Offer> mOffers;
     private String mCurUserId;
-    private int mStateToShow;
     private String mCurQuery;
 
-    public MyOfferFragment() {
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    private OnFragmentInteractionListener mListener;
+
+    public ReservationsNotClosedTab() {
         // Required empty public constructor
     }
 
@@ -83,11 +78,11 @@ public class MyOfferFragment extends Fragment implements RecyclerViewListener {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MyOfferFragment.
+     * @return A new instance of fragment ReservationsNotClosedTab.
      */
     // TODO: Rename and change types and number of parameters
-    public static MyOfferFragment newInstance(String param1, String param2) {
-        MyOfferFragment fragment = new MyOfferFragment();
+    public static ReservationsNotClosedTab newInstance(String param1, String param2) {
+        ReservationsNotClosedTab fragment = new ReservationsNotClosedTab();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -132,65 +127,25 @@ public class MyOfferFragment extends Fragment implements RecyclerViewListener {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        ( (DrawerActivity) getActivity() ).mToolbar.setTitle( R.string.my_offers );
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mSpinner = (Spinner) view.findViewById( R.id.sp_my_offer );
-        mRecyclerView = (RecyclerView) view.findViewById( R.id.rv_my_offers );
-        mFloatingActionButton = (FloatingActionButton) view.findViewById( R.id.fab_my_offers );
+        mRecyclerView = (RecyclerView) view.findViewById( R.id.rv_search );
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFireBaseDatabase = FirebaseDatabase.getInstance();
         mOffersDatabaseReference = mFireBaseDatabase.getReference().child( "offers" );
 
         mCurUserId = mFirebaseAuth.getCurrentUser().getUid();
-        mStateToShow = -1;
         mCurQuery = "";
         mOffers = new ArrayList<Offer>();
         initRecyclerView();
-
-        mSpinner.setOnItemSelectedListener(
-                new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        mStateToShow = (int)(l-1);
-                        changeResultOffers( mCurQuery );
-                    }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {}
-                }
-        );
-
-        mFloatingActionButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        replaceFragment(new NewOfferFragment());
-
-                    }
-                }
-        );
-
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
-                if ( dy != 0 && mFloatingActionButton.isShown())
-                    mFloatingActionButton.hide();
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE){
-                    mFloatingActionButton.show();
-                }
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
     }
 
     @Override
@@ -200,6 +155,7 @@ public class MyOfferFragment extends Fragment implements RecyclerViewListener {
         String id = mOffers.get(position).getId();
         Log.i("idOffer", mOffers.get(position).toString());
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
         Bundle args = new Bundle();
         args.putString("offer_id", id);
         Fragment f = new OfferViewFragment();
@@ -208,7 +164,6 @@ public class MyOfferFragment extends Fragment implements RecyclerViewListener {
 
     }
 
-    //////////////////////////// CLASS METHODS ////////////////////////////////////////////////////
     private void initRecyclerView(){
         LinearLayoutManager layoutManager = new LinearLayoutManager( getActivity() );
         layoutManager.setReverseLayout( true );
@@ -217,6 +172,7 @@ public class MyOfferFragment extends Fragment implements RecyclerViewListener {
         mOfferAdapter = new OfferAdapter( mOffers, this );
         mRecyclerView.setAdapter( mOfferAdapter );
         mRecyclerView.addItemDecoration( new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        changeResultOffers( "" );
     }
 
     private void changeSearchViewTextColor(View view) {
@@ -241,7 +197,7 @@ public class MyOfferFragment extends Fragment implements RecyclerViewListener {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Offer resultOffer = dataSnapshot.getValue( Offer.class );
-                if( mCurUserId.equals( resultOffer.getOwnerId() ) && (mStateToShow == -1 || mStateToShow == resultOffer.getState()) ) {
+                if( mCurUserId.equals( resultOffer.getUserReservedId() ) && resultOffer.getState() == 1 ) {
                     if (resultOffer.getTitle().toLowerCase().contains(query) || resultOffer.getAuthor().toLowerCase().contains(query)) {
                         mOffers.add(resultOffer);
                         mOfferAdapter.notifyDataSetChanged();
@@ -257,14 +213,6 @@ public class MyOfferFragment extends Fragment implements RecyclerViewListener {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_offer, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -298,10 +246,5 @@ public class MyOfferFragment extends Fragment implements RecyclerViewListener {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    public void replaceFragment(Fragment f) {
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_content, f).addToBackStack(null).commit();
     }
 }
