@@ -38,7 +38,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="10dp"
-                        android:text="Wiliam Snoe"
                         android:textColor="#fff"
                         android:textSize="21sp"
                         android:textStyle="bold" />
@@ -74,7 +73,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="10dp"
-                                android:text="125"
                                 android:textColor="@color/startblue"
                                 android:textSize="20sp"
                                 android:textStyle="bold" />
@@ -99,7 +97,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="10dp"
-                                android:text="1205"
                                 android:textColor="@color/startblue"
                                 android:textSize="20sp"
                                 android:textStyle="bold" />
@@ -124,7 +121,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="10dp"
-                                android:text="360"
                                 android:textColor="@color/startblue"
                                 android:textSize="20sp"
                                 android:textStyle="bold" />
@@ -159,7 +155,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:paddingStart="20dp"
-                        android:text="Wiliam@gmail.com"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -181,7 +176,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:paddingStart="20dp"
-                        android:text="+266 225 225"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -203,7 +197,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:paddingStart="20dp"
-                        android:text="Ciudad"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -211,13 +204,13 @@
 
             <Button
                 android:id="@+id/profile_update"
+                android:text="Editar Informacion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="35dp"
                 android:layout_marginBottom="35dp"
                 android:background="@drawable/buttonstyle"
-                android:text="Editar"
                 android:textColor="#fff" />
 
 

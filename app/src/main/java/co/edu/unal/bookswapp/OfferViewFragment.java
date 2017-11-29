@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -189,6 +190,18 @@ public class OfferViewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mOffersDatabaseReference.child(offerId).child("state").setValue(2);
+            }
+        });
+
+        ownerTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                Bundle args = new Bundle();
+                args.putString("profile_id", currentOffer.getOwnerId());
+                Fragment f = new ProfileFragment();
+                f.setArguments(args);
+                fragmentTransaction.replace(R.id.main_content, f).addToBackStack(null).commit();
             }
         });
     }

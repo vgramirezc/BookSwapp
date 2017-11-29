@@ -95,7 +95,7 @@ public class ProfileFragment extends Fragment {
         return fragment;
     }
 
-    private String profileId = "XVRA8hKwM9WIJHzjobHsnmStNV63";
+    private String profileId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -136,6 +136,11 @@ public class ProfileFragment extends Fragment {
 
         updateButton = (Button) view.findViewById(R.id.profile_update);
 
+        if(!profileId.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+            updateButton.setVisibility(View.GONE);
+        }
+
+
         mProfileDatabaseReference = mFirebaseDatabase.getReference().child("users").child(profileId);
         mProfileDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -149,7 +154,7 @@ public class ProfileFragment extends Fragment {
                 else
                     ratingTextView.setText("0");
                 emailTextView.setText(p.getEmail());
-                phoneTextView.setText(p.getPhone());
+                phoneTextView.setText("+"+p.getPhone());
                 cityTextView.setText(p.getCity());
 
                 if(!p.getUrlImage().equals("")) {
@@ -176,7 +181,7 @@ public class ProfileFragment extends Fragment {
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO abrir nuevo fragmento de editar
+            // TODO abrir nuevo fragmento de editar
             }
         });
 

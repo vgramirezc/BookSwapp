@@ -116,7 +116,12 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         int id = item.getItemId();
 
         if (id == R.id.profile) {
-            replaceFragment( new ProfileFragment() );
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            Bundle args = new Bundle();
+            args.putString("profile_id", auth.getCurrentUser().getUid());
+            Fragment f = new ProfileFragment();
+            f.setArguments(args);
+            fragmentTransaction.replace(R.id.main_content, f).addToBackStack(null).commit();
         } else if (id == R.id.my_offers) {
             replaceFragment( new MyOfferFragment() );
         } else if (id == R.id.search_book) {
